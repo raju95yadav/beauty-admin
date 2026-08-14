@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import AddProduct from './pages/AddProduct';
@@ -11,29 +11,18 @@ import Users from './pages/Users';
 import Orders from './pages/Orders';
 import Settings from './pages/Settings';
 
+// ✅ SYNC: Read token from URL before any render so ProtectedRoute can access it immediately
+const params = new URLSearchParams(window.location.search);
+const urlToken = params.get('token');
+const urlRole = params.get('role');
+if (urlToken && urlRole === 'admin') {
+  localStorage.setItem('token', urlToken);
+  localStorage.setItem('role', urlRole);
+  // Clean URL — remove ?token=...&role=... from address bar
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
 function App() {
-  
-  useEffect(() => {
-    // URL Parameter Ingestion (Token Transfer)
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('token');
-    const urlRole = params.get('role');
-
-    if (urlToken && urlRole === 'admin') {
-      localStorage.setItem('token', urlToken);
-      localStorage.setItem('role', urlRole);
-      // Clean URL parameters
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    // Auto Dashboard Load Check (Prevent blank screens)
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-
-    if (!token || role !== 'admin') {
-      // Intentionally empty - ProtectedRoute will handle redirect
-    }
-  }, []);
 
   return (
     <ThemeProvider>
