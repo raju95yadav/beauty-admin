@@ -46,7 +46,7 @@ const Navbar = () => {
       },
     });
     setTimeout(() => {
-      window.location.href = 'http://localhost:5173/login';
+      window.location.href = '/login';
     }, 1200);
   };
 
