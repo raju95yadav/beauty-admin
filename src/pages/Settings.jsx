@@ -90,10 +90,27 @@ const Settings = () => {
       const response = await api.put('/users/profile', data, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      toast.success('Profile updated successfully!');
-      if (response.data.password) {
-        setFormData(prev => ({ ...prev, password: '' }));
+      
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
       }
+      localStorage.setItem('user', JSON.stringify(response.data));
+
+      setFormData(prev => ({
+        ...prev,
+        username: response.data.username || '',
+        name: response.data.name || '',
+        email: response.data.email || '',
+        phone: response.data.phone || '',
+        address: response.data.address || '',
+        password: ''
+      }));
+
+      if (response.data.profilePic) {
+        setPreviewUrl(response.data.profilePic);
+      }
+
+      toast.success('Profile updated successfully!');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Update failed');
     } finally {
@@ -165,7 +182,7 @@ const Settings = () => {
                 </div>
                 <label className="absolute -bottom-2 -right-2 p-2 bg-pink-500 text-white rounded-none shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
                   <Camera size={18} />
-                  <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+                  <input id="settings-avatar-1" name="avatar" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                 </label>
               </div>
               <div className="text-center sm:text-left">
@@ -174,7 +191,7 @@ const Settings = () => {
                 <div className="flex gap-4">
                   <label className="text-xs font-bold text-pink-500 hover:text-pink-400 cursor-pointer uppercase tracking-widest">
                     Upload New
-                    <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+                    <input id="settings-avatar-2" name="avatar" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                   </label>
                   <button type="button" onClick={() => setPreviewUrl(null)} className="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-widest">
                     Remove
@@ -186,10 +203,11 @@ const Settings = () => {
             {/* Grid Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Username</label>
+                <label htmlFor="settings-username" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Username</label>
                 <div className="relative">
                   <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-username"
                     name="username"
                     value={formData.username}
                     onChange={handleInputChange}
@@ -200,10 +218,11 @@ const Settings = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Full Name</label>
+                <label htmlFor="settings-fullname" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-fullname"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -214,10 +233,11 @@ const Settings = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Email Address</label>
+                <label htmlFor="settings-email" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-email"
                     name="email"
                     type="email"
                     value={formData.email}
@@ -229,10 +249,11 @@ const Settings = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Phone (WhatsApp Receiver)</label>
+                <label htmlFor="settings-phone" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Phone (WhatsApp Receiver)</label>
                 <div className="relative">
                   <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
@@ -243,10 +264,11 @@ const Settings = () => {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Business Address</label>
+                <label htmlFor="settings-address" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">Business Address</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-address"
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
@@ -257,10 +279,11 @@ const Settings = () => {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">New Password (leave blank to keep current)</label>
+                <label htmlFor="settings-password" className="text-[10px] font-black uppercase tracking-widest text-nykaa-text-muted ml-1">New Password (leave blank to keep current)</label>
                 <div className="relative">
                   <Shield className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-nykaa-text-muted" />
                   <input 
+                    id="settings-password"
                     name="password"
                     type="password"
                     value={formData.password}

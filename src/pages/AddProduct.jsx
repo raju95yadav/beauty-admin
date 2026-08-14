@@ -137,10 +137,11 @@ const AddProduct = () => {
 
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Product Title</label>
+                <label htmlFor="add-product-name" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Product Title</label>
                 <div className="relative group">
                   <Type className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
                   <input
+                    id="add-product-name"
                     type="text"
                     name="name"
                     required
@@ -153,8 +154,9 @@ const AddProduct = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Full Description</label>
+                <label htmlFor="add-product-description" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Full Description</label>
                 <textarea
+                  id="add-product-description"
                   name="description"
                   required
                   rows="6"
@@ -184,10 +186,11 @@ const AddProduct = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Price ($)</label>
+                <label htmlFor="add-product-price" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Price (₹)</label>
                 <div className="relative group">
                   <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-pink-500" size={20} />
                   <input
+                    id="add-product-price"
                     type="number"
                     name="price"
                     required
@@ -200,10 +203,11 @@ const AddProduct = () => {
               </div>
  
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Available Stock</label>
+                <label htmlFor="add-product-stock" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Available Stock</label>
                 <div className="relative group">
                   <Box className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={20} />
                   <input
+                    id="add-product-stock"
                     type="number"
                     name="stock"
                     required
@@ -277,10 +281,11 @@ const AddProduct = () => {
           >
             <div className="space-y-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Category</label>
+                <label htmlFor="add-product-category" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Category</label>
                 <div className="relative group">
                   <Layers className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={18} />
                   <select
+                    id="add-product-category"
                     name="category"
                     required
                     className="input-glass pl-12 appearance-none font-bold text-nykaa-text"
@@ -302,10 +307,11 @@ const AddProduct = () => {
               </div>
  
               <div className="space-y-1">
-                <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Brand Identity</label>
+                <label htmlFor="add-product-brand" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Brand Identity</label>
                 <div className="relative group">
                   <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={18} />
                   <input
+                    id="add-product-brand"
                     type="text"
                     name="brand"
                     className="input-glass pl-12 font-bold text-nykaa-text"

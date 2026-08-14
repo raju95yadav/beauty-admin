@@ -97,6 +97,8 @@ const Users = () => {
           <div className="relative group flex-1 min-w-[300px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
+              id="users-search"
+              name="search"
               type="text" 
               placeholder="Search by name, email, phone..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
@@ -138,10 +140,12 @@ const Users = () => {
                   <UserIcon size={24} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-nykaa-text">{user.name || 'Anonymous User'}</h3>
+                  <h3 className="text-lg font-black text-nykaa-text">
+                    {user.name || (user.email ? user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1) : 'Member')}
+                  </h3>
                   <div className="flex items-center gap-2 text-xs font-bold text-nykaa-text-muted">
-                    <span className="size-2 bg-green-500 rounded-full"></span>
-                    Online
+                    <span className="size-2 bg-emerald-500 rounded-full"></span>
+                    {user.role === 'admin' ? 'System Administrator' : 'Active Account'}
                   </div>
                 </div>
               </div>

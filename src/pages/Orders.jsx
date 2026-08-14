@@ -121,6 +121,8 @@ const Orders = () => {
           <div className="relative group flex-1 min-w-[300px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
+              id="orders-search"
+              name="search"
               type="text" 
               placeholder="Search by Order ID, name..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
@@ -160,7 +162,7 @@ const Orders = () => {
                        </span>
                     </div>
                     <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-bold text-nykaa-text-muted">
-                       <span className="flex items-center gap-1"><UserIcon size={12} /> {order.user?.name || 'Guest'}</span>
+                       <span className="flex items-center gap-1"><UserIcon size={12} /> {order.user?.name || (order.user?.email ? order.user.email.split('@')[0] : 'Guest')}</span>
                        <span className="flex items-center gap-1"><Clock size={12} /> {new Date(order.createdAt).toLocaleString()}</span>
                        <span className="flex items-center gap-1"><Package size={12} /> {order.orderItems?.length || 0} Items</span>
                     </div>
@@ -170,13 +172,16 @@ const Orders = () => {
               <div className="flex items-center gap-8">
                  <div className="text-right">
                     <p className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest mb-1">Total Amount</p>
-                    <p className="text-2xl font-black text-nykaa-text">${order.totalPrice?.toFixed(2)}</p>
+                    <p className="text-2xl font-black text-nykaa-text">₹{order.totalPrice?.toFixed(2)}</p>
                  </div>
                  
                  <div className="h-12 w-px bg-nykaa-border hidden lg:block"></div>
 
                   <div className="flex items-center gap-3">
                     <select 
+                       id={`order-status-${order._id}`}
+                       name="orderStatus"
+                       aria-label="Order status"
                        disabled={updatingId === order._id}
                        onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
                        className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-none px-4 py-3 text-xs font-black text-nykaa-text outline-none cursor-pointer focus:border-pink-500/50 transition-colors"

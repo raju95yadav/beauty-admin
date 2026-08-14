@@ -107,12 +107,12 @@ const Sidebar = () => {
           >
             <div className="flex items-center gap-3 mb-3">
               <Sparkles className="text-pink-500" size={18} />
-              <p className="text-xs font-black uppercase tracking-widest text-nykaa-text">Raj Stats</p>
+              <p className="text-xs font-black uppercase tracking-widest text-nykaa-text">Admin Insights</p>
             </div>
-            <p className="text-[10px] text-nykaa-text-muted font-bold mb-4">View real-time analytics and insights.</p>
-            <button className="w-full py-3 bg-pink-500/10 hover:bg-pink-500/20 text-pink-500 rounded-xl text-xs font-bold transition-all active:scale-95">
-              Launch Console
-            </button>
+            <p className="text-[10px] text-nykaa-text-muted font-bold mb-4">View real-time store analytics and metrics.</p>
+            <Link to="/dashboard" className="block text-center w-full py-3 bg-pink-500/10 hover:bg-pink-500/20 text-pink-500 rounded-xl text-xs font-bold transition-all active:scale-95">
+              Analytics Overview
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

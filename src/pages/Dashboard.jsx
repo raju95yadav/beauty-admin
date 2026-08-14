@@ -39,26 +39,6 @@ const Dashboard = () => {
       }
     };
     fetchStats();
-
-    // Start fluctuation effect
-    timerRef.current = setInterval(() => {
-      setChartData(prev => {
-        if (prev.length === 0) return prev;
-        const newData = [...prev];
-        const lastIndex = newData.length - 1;
-        // Subtle fluctuation: +/- 2%
-        const jitter = 1 + (Math.random() * 0.04 - 0.02); 
-        newData[lastIndex] = {
-          ...newData[lastIndex],
-          sales: Math.floor(newData[lastIndex].sales * jitter)
-        };
-        return newData;
-      });
-    }, 3000);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
   }, []);
 
   if (loading) {
@@ -70,7 +50,7 @@ const Dashboard = () => {
   }
 
   const statCards = [
-    { title: 'Total Revenue', value: stats?.revenue || 0, icon: <DollarSign size={24} />, color: 'from-green-500/20 to-emerald-500/20', iconColor: 'text-green-500', prefix: '$', path: '/dashboard' },
+    { title: 'Total Revenue', value: stats?.revenue || 0, icon: <DollarSign size={24} />, color: 'from-green-500/20 to-emerald-500/20', iconColor: 'text-green-500', prefix: '₹', path: '/dashboard' },
     { title: 'Total Orders', value: stats?.orders || 0, icon: <ShoppingCart size={24} />, color: 'from-pink-500/20 to-rose-500/20', iconColor: 'text-pink-500', path: '/orders' },
     { title: 'Products', value: stats?.products || 0, icon: <Package size={24} />, color: 'from-blue-500/20 to-indigo-500/20', iconColor: 'text-blue-500', path: '/manage-products' },
     { title: 'Total Users', value: stats?.users || 0, icon: <Users size={24} />, color: 'from-purple-500/20 to-violet-500/20', iconColor: 'text-purple-500', path: '/users' },
@@ -86,10 +66,6 @@ const Dashboard = () => {
           <p className="text-nykaa-text-muted font-medium mt-1">Real-time performance metrics for your GLAM Beauty project.</p>
         </div>
         <div className="flex items-center gap-3">
-           <div className="glass px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold text-nykaa-text-muted">
-              <span className="size-2 bg-green-500 rounded-full animate-ping"></span>
-              LIVE DATA
-           </div>
            <button className="btn-primary flex items-center gap-2 text-sm">
               <Activity size={16} />
               Export Report
@@ -115,9 +91,9 @@ const Dashboard = () => {
                   <div className={`p-4 rounded-2xl bg-white/5 ${stat.iconColor} shadow-inner`}>
                     {stat.icon}
                   </div>
-                  <div className="flex items-center gap-1 text-xs font-black text-green-500 bg-green-500/10 px-2 py-1 rounded-lg">
-                    <ArrowUpRight size={12} />
-                    +12.5%
+                  <div className={`flex items-center gap-1 text-xs font-black ${parseFloat(stats?.growthPercent) >= 0 ? 'text-green-500 bg-green-500/10' : 'text-red-500 bg-red-500/10'} px-2 py-1 rounded-lg`}>
+                    {parseFloat(stats?.growthPercent) >= 0 ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                    {stats?.growthPercent || '0.0'}%
                   </div>
                 </div>
                 <h3 className="text-nykaa-text-muted text-xs font-black uppercase tracking-[0.2em]">{stat.title}</h3>
@@ -140,7 +116,7 @@ const Dashboard = () => {
         >
           <div className="flex items-center justify-between mb-8">
              <h3 className="text-xl font-black text-nykaa-text">Revenue <span className="text-pink-500">Growth</span></h3>
-             <select className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:bg-nykaa-surface/10 transition-colors text-nykaa-text">
+             <select id="revenue-timeframe" name="timeframe" aria-label="Select revenue timeframe" className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:bg-nykaa-surface/10 transition-colors text-nykaa-text">
                <option>Last 7 Days</option>
                <option>Last 30 Days</option>
              </select>
@@ -230,13 +206,15 @@ const Dashboard = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-6 pt-6 border-t border-white/5">
-             <div className="flex items-center justify-between mb-4">
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Main Driver</p>
-                <p className="text-xs font-black text-pink-500 uppercase tracking-widest">Makeup (40%)</p>
-             </div>
-             <p className="text-[10px] text-gray-500 italic">Makeup categories remain the primary revenue generator this quarter.</p>
-          </div>
+           <div className="mt-6 pt-6 border-t border-white/5">
+              <div className="flex items-center justify-between mb-4">
+                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Main Driver</p>
+                 <p className="text-xs font-black text-pink-500 uppercase tracking-widest">
+                   {stats?.categoryData?.[0] ? `${stats.categoryData[0].name} (${Math.round((stats.categoryData[0].value / (stats?.products || 1)) * 100)}%)` : 'N/A'}
+                 </p>
+              </div>
+              <p className="text-[10px] text-gray-500 italic">{stats?.categoryData?.[0] ? `${stats.categoryData[0].name} products lead your catalog this quarter.` : 'No category data available.'}</p>
+           </div>
         </motion.div>
       </div>
 
@@ -263,22 +241,39 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-nykaa-border">
-              {[1, 2, 3].map((_, i) => (
-                <tr key={i} className="group hover:bg-nykaa-surface/5 transition-colors">
-                  <td className="py-6 text-sm font-bold text-nykaa-text-muted">#ORD00{i+1}</td>
+              {(stats?.recentOrders && stats.recentOrders.length > 0) ? stats.recentOrders.map((order, i) => {
+                const statusColors = {
+                  'Delivered': 'bg-green-500/10 text-green-500',
+                  'Processing': 'bg-yellow-500/10 text-yellow-500',
+                  'Shipped': 'bg-blue-500/10 text-blue-500',
+                  'Packed': 'bg-purple-500/10 text-purple-500',
+                  'Cancelled': 'bg-red-500/10 text-red-500',
+                };
+                const statusColor = statusColors[order.orderStatus] || 'bg-gray-500/10 text-gray-500';
+                const customerName = order.user?.name || 'Guest';
+                const initials = customerName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                const firstItem = order.orderItems?.[0]?.name || 'N/A';
+                return (
+                <tr key={order._id || i} className="group hover:bg-nykaa-surface/5 transition-colors">
+                  <td className="py-6 text-sm font-bold text-nykaa-text-muted">#{order._id?.toString().slice(-6).toUpperCase()}</td>
                   <td className="py-6">
                     <div className="flex items-center gap-3">
-                      <div className="size-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 text-[10px] font-black">JD</div>
-                      <span className="text-sm font-bold text-nykaa-text">Jassiji Kaur</span>
+                      <div className="size-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 text-[10px] font-black">{initials}</div>
+                      <span className="text-sm font-bold text-nykaa-text">{customerName}</span>
                     </div>
                   </td>
-                  <td className="py-6 text-sm font-medium text-nykaa-text-muted">Lipstick Matte Red</td>
-                  <td className="py-6 text-sm font-black text-nykaa-text">$129.00</td>
+                  <td className="py-6 text-sm font-medium text-nykaa-text-muted">{firstItem}</td>
+                  <td className="py-6 text-sm font-black text-nykaa-text">₹{order.totalPrice?.toFixed(2)}</td>
                   <td className="py-6 text-right">
-                    <span className="px-3 py-1 bg-green-500/10 text-green-500 text-[10px] font-black rounded-full uppercase tracking-widest">Completed</span>
+                    <span className={`px-3 py-1 ${statusColor} text-[10px] font-black rounded-full uppercase tracking-widest`}>{order.orderStatus || 'Processing'}</span>
                   </td>
                 </tr>
-              ))}
+                );
+              }) : (
+                <tr>
+                  <td colSpan="5" className="py-12 text-center text-sm text-nykaa-text-muted">No orders yet</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

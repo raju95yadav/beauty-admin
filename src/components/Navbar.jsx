@@ -56,6 +56,8 @@ const Navbar = () => {
         <div className="relative max-w-md w-full hidden md:block">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted size-4" />
           <input 
+            id="admin-navbar-search"
+            name="search"
             type="text" 
             placeholder="Search products, orders..."
             className="input-glass pl-12 h-11 bg-nykaa-bg dark:bg-nykaa-surface/5 border-nykaa-border hover:bg-nykaa-surface/10 transition-colors text-nykaa-text"
