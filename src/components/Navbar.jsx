@@ -22,7 +22,7 @@ const Navbar = () => {
       const { data } = await api.get('/admin/notifications');
       setUnreadCount(data.filter(n => !n.isRead).length);
     } catch (error) {
-       console.error('Failed to fetch unread count');
+      console.error('Failed to fetch unread count');
     }
   };
 
@@ -46,7 +46,7 @@ const Navbar = () => {
       },
     });
     setTimeout(() => {
-      window.location.href = 'http://localhost:5173/login';
+      window.location.href = 'https://beauty-glam-five.vercel.app/login';
     }, 1200);
   };
 
@@ -55,10 +55,10 @@ const Navbar = () => {
       <div className="flex items-center gap-4 flex-1">
         <div className="relative max-w-md w-full hidden md:block">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted size-4" />
-          <input 
+          <input
             id="admin-navbar-search"
             name="search"
-            type="text" 
+            type="text"
             placeholder="Search products, orders..."
             className="input-glass pl-12 h-11 bg-nykaa-bg dark:bg-nykaa-surface/5 border-nykaa-border hover:bg-nykaa-surface/10 transition-colors text-nykaa-text"
           />
@@ -66,7 +66,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-6">
-        <button 
+        <button
           onClick={toggleTheme}
           className="p-3 rounded-2xl glass hover:bg-nykaa-surface/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"
         >
@@ -74,7 +74,7 @@ const Navbar = () => {
         </button>
 
         <div className="relative">
-          <button 
+          <button
             onClick={() => setIsNotifOpen(!isNotifOpen)}
             className="p-3 rounded-2xl glass hover:bg-nykaa-surface/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text relative"
           >
@@ -85,10 +85,10 @@ const Navbar = () => {
               </span>
             )}
           </button>
-          
-          <NotificationPanel 
-            isOpen={isNotifOpen} 
-            onClose={() => setIsNotifOpen(false)} 
+
+          <NotificationPanel
+            isOpen={isNotifOpen}
+            onClose={() => setIsNotifOpen(false)}
             onUnreadChange={setUnreadCount}
           />
         </div>
@@ -102,14 +102,14 @@ const Navbar = () => {
           </div>
           <div className="size-11 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 p-[2px]">
             <div className="size-full rounded-[14px] bg-nykaa-surface flex items-center justify-center overflow-hidden">
-               {admin?.profilePic ? (
-                 <img src={admin.profilePic} alt="Admin" className="size-full object-cover" />
-               ) : (
-                 <User className="text-nykaa-text-muted size-6" />
-               )}
+              {admin?.profilePic ? (
+                <img src={admin.profilePic} alt="Admin" className="size-full object-cover" />
+              ) : (
+                <User className="text-nykaa-text-muted size-6" />
+              )}
             </div>
           </div>
-          <button 
+          <button
             onClick={handleLogout}
             className="p-3 rounded-2xl glass hover:bg-red-500/20 text-nykaa-text-muted hover:text-red-500 transition-all active:scale-95"
           >
