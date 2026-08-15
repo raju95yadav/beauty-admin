@@ -97,8 +97,6 @@ const Users = () => {
           <div className="relative group flex-1 min-w-[300px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
-              id="users-search"
-              name="search"
               type="text" 
               placeholder="Search by name, email, phone..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"

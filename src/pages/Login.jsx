@@ -93,12 +93,10 @@ const Login = () => {
 
           <form onSubmit={handleLogin} className="space-y-8">
             <div className="space-y-3">
-              <label htmlFor="admin-email" className="text-[10px] font-black text-gray-500 uppercase tracking-widest px-1">Admin Email</label>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest px-1">Admin Email</label>
               <div className="relative group/input">
                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within/input:text-pink-500 transition-colors" size={20} />
                 <input
-                  id="admin-email"
-                  name="email"
                   type="email"
                   required
                   className="input-glass pl-14 h-16 text-lg font-black tracking-tight"
@@ -110,12 +108,10 @@ const Login = () => {
             </div>
 
             <div className="space-y-3">
-              <label htmlFor="admin-password" className="text-[10px] font-black text-gray-500 uppercase tracking-widest px-1">Password</label>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest px-1">Password</label>
               <div className="relative group/input">
                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within/input:text-pink-500 transition-colors" size={20} />
                 <input
-                  id="admin-password"
-                  name="password"
                   type="password"
                   required
                   className="input-glass pl-14 h-16 text-lg font-black tracking-tight"

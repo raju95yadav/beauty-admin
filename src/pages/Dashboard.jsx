@@ -116,7 +116,7 @@ const Dashboard = () => {
         >
           <div className="flex items-center justify-between mb-8">
              <h3 className="text-xl font-black text-nykaa-text">Revenue <span className="text-pink-500">Growth</span></h3>
-             <select id="revenue-timeframe" name="timeframe" aria-label="Select revenue timeframe" className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:bg-nykaa-surface/10 transition-colors text-nykaa-text">
+             <select className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:bg-nykaa-surface/10 transition-colors text-nykaa-text">
                <option>Last 7 Days</option>
                <option>Last 30 Days</option>
              </select>

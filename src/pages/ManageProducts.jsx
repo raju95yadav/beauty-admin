@@ -119,8 +119,6 @@ const ManageProducts = () => {
           <div className="relative group flex-1 min-w-[300px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
-              id="manage-products-search"
-              name="search"
               type="text" 
               placeholder="Search by name, category..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
@@ -310,12 +308,10 @@ const ManageProducts = () => {
                   {/* Left Column: Core Info */}
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="edit-product-name" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Product Name</label>
+                      <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Product Name</label>
                       <div className="relative">
                         <Tag className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                         <input 
-                          id="edit-product-name"
-                          name="name"
                           className="input-glass pl-12 font-bold text-nykaa-text"
                           placeholder="Ex: Matte Silk Lipstick"
                           value={selectedProduct.name}
@@ -326,12 +322,10 @@ const ManageProducts = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label htmlFor="edit-product-category" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Category</label>
+                        <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Category</label>
                         <div className="relative">
                           <Layers className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                           <input 
-                            id="edit-product-category"
-                            name="category"
                             className="input-glass pl-12 font-bold text-nykaa-text"
                             placeholder="Ex: Makeup"
                             value={selectedProduct.category}
@@ -340,12 +334,10 @@ const ManageProducts = () => {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <label htmlFor="edit-product-price" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Price (₹)</label>
+                        <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Price (₹)</label>
                         <div className="relative">
                           <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                           <input 
-                            id="edit-product-price"
-                            name="price"
                             type="number"
                             className="input-glass pl-12 font-bold text-pink-500"
                             placeholder="0.00"
@@ -358,12 +350,10 @@ const ManageProducts = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                         <label htmlFor="edit-product-stock" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Inventory Stock</label>
+                         <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Inventory Stock</label>
                          <div className="relative">
                            <Box className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                            <input 
-                             id="edit-product-stock"
-                             name="stock"
                              type="number"
                              className="input-glass pl-12 font-bold text-nykaa-text"
                              placeholder="Ex: 50"
@@ -373,12 +363,10 @@ const ManageProducts = () => {
                          </div>
                       </div>
                       <div className="space-y-2">
-                        <label htmlFor="edit-product-brand" className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Brand</label>
+                        <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Brand</label>
                         <div className="relative">
                            <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                            <input 
-                             id="edit-product-brand"
-                             name="brand"
                              className="input-glass pl-12 font-bold text-nykaa-text"
                              placeholder="Ex: Nykaa"
                              value={selectedProduct.brand || ''}

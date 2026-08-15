@@ -121,8 +121,6 @@ const Orders = () => {
           <div className="relative group flex-1 min-w-[300px]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
-              id="orders-search"
-              name="search"
               type="text" 
               placeholder="Search by Order ID, name..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
@@ -179,9 +177,6 @@ const Orders = () => {
 
                   <div className="flex items-center gap-3">
                     <select 
-                       id={`order-status-${order._id}`}
-                       name="orderStatus"
-                       aria-label="Order status"
                        disabled={updatingId === order._id}
                        onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
                        className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-none px-4 py-3 text-xs font-black text-nykaa-text outline-none cursor-pointer focus:border-pink-500/50 transition-colors"
