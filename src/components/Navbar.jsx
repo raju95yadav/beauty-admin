@@ -46,7 +46,7 @@ const Navbar = () => {
       },
     });
     setTimeout(() => {
-      window.location.href = 'https://beauty-glam-five.vercel.app/login';
+      window.location.href = '/login';
     }, 1200);
   };
 
