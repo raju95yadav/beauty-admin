@@ -19,9 +19,9 @@ function App() {
     const urlToken = params.get('token');
     const urlRole = params.get('role');
 
-    if (urlToken && urlRole === 'admin') {
+    if (urlToken && (!urlRole || urlRole === 'admin' || urlRole === 'undefined')) {
       localStorage.setItem('token', urlToken);
-      localStorage.setItem('role', urlRole);
+      localStorage.setItem('role', 'admin');
       // Clean URL parameters
       window.history.replaceState({}, document.title, window.location.pathname);
     }
