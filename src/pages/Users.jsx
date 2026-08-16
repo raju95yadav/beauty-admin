@@ -35,7 +35,7 @@ const Users = () => {
       const { data } = await api.get('/admin/users');
       setUsers(data || []);
     } catch (error) {
-      toast.error('Failed to load users');
+      toast.error(error.message || 'Failed to load users');
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ const Users = () => {
       setUsers(users.filter(u => u._id !== selectedUser._id));
       setShowDeleteModal(false);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to remove user');
+      toast.error(error.message || error.response?.data?.message || 'Failed to remove user');
     } finally {
       setIsDeleting(false);
       setSelectedUser(null);

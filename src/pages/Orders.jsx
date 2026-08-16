@@ -37,7 +37,7 @@ const Orders = () => {
       const { data } = await api.get('/admin/orders');
       setOrders(data || []);
     } catch (error) {
-      toast.error('Failed to load orders');
+      toast.error(error.message || 'Failed to load orders');
     } finally {
       setLoading(false);
     }
@@ -50,7 +50,7 @@ const Orders = () => {
       toast.success(`Order status updated to ${status}`);
       fetchOrders();
     } catch (error) {
-      toast.error('Status update failed');
+      toast.error(error.message || 'Status update failed');
     } finally {
       setUpdatingId(null);
     }
@@ -65,7 +65,7 @@ const Orders = () => {
       setOrders(orders.filter(o => o._id !== selectedOrder._id));
       setShowDeleteModal(false);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to delete order');
+      toast.error(error.message || error.response?.data?.message || 'Failed to delete order');
     } finally {
       setIsDeleting(false);
       setSelectedOrder(null);

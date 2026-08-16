@@ -22,12 +22,23 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const customError = new Error(
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      'An unexpected error occurred'
+    );
+    customError.status = error.response?.status;
+    customError.data = error.response?.data;
+
+    if (error.response?.status === 401 && !error.config?.url?.includes('/auth/admin-login')) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
-      window.location.href = '/login';
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
-    return Promise.reject(error);
+    return Promise.reject(customError);
   }
 );
 

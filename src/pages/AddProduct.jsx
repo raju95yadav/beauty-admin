@@ -63,7 +63,7 @@ const AddProduct = () => {
       setProduct({ name: '', price: '', category: '', brand: 'Nykaa', stock: '', image: null, imagePreview: '', description: '' });
       setTimeout(() => navigate('/manage-products'), 1500);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to list product', { id: loadingToast });
+      toast.error(error.message || error.response?.data?.message || 'Failed to list product', { id: loadingToast });
     } finally {
       setLoading(false);
     }

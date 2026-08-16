@@ -41,7 +41,7 @@ const ManageProducts = () => {
       const { data } = await api.get('/products?limit=100');
       setProducts(data.products || []);
     } catch (error) {
-      toast.error('Failed to load products');
+      toast.error(error.message || 'Failed to load products');
     } finally {
       setLoading(false);
     }
@@ -54,7 +54,7 @@ const ManageProducts = () => {
       setProducts(products.filter(p => p._id !== id));
       setShowDeleteModal(false);
     } catch (error) {
-      toast.error('Deletion failed. Please try again.');
+      toast.error(error.message || 'Deletion failed. Please try again.');
     }
   };
 
@@ -82,7 +82,7 @@ const ManageProducts = () => {
       fetchProducts();
       setIsEditing(false);
     } catch (error) {
-      toast.error('Update failed', { id: loadingToast });
+      toast.error(error.message || 'Update failed', { id: loadingToast });
     }
   };
 

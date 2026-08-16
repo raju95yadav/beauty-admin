@@ -33,7 +33,7 @@ const Login = () => {
         navigate('/dashboard');
       }, 1000);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Invalid credentials.', { id: loadingToast });
+      toast.error(error.message || error.response?.data?.message || 'Invalid credentials.', { id: loadingToast });
     } finally {
       setLoading(false);
     }
