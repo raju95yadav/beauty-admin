@@ -58,23 +58,24 @@ const Navbar = () => {
           <input 
             type="text" 
             placeholder="Search products, orders..."
-            className="input-glass pl-12 h-11 bg-nykaa-bg dark:bg-nykaa-surface/5 border-nykaa-border hover:bg-nykaa-surface/10 transition-colors text-nykaa-text"
+            className="input-glass pl-12 h-11 text-nykaa-text"
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
         <button 
           onClick={toggleTheme}
-          className="p-3 rounded-2xl glass hover:bg-nykaa-surface/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"
+          className="p-3 rounded-2xl glass hover:bg-pink-500/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"
+          title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          {darkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
         </button>
 
         <div className="relative">
           <button 
             onClick={() => setIsNotifOpen(!isNotifOpen)}
-            className="p-3 rounded-2xl glass hover:bg-nykaa-surface/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text relative"
+            className="p-3 rounded-2xl glass hover:bg-pink-500/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text relative"
           >
             <Bell size={20} />
             {unreadCount > 0 && (
@@ -91,11 +92,11 @@ const Navbar = () => {
           />
         </div>
 
-        <div className="h-10 w-px bg-nykaa-border mx-2"></div>
+        <div className="h-8 w-px bg-nykaa-border mx-1"></div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-nykaa-text leading-tight">{admin?.name || 'Admin User'}</p>
+            <p className="text-sm font-bold text-nykaa-text leading-tight">{admin?.name || 'System Admin'}</p>
             <p className="text-[10px] text-pink-500 uppercase tracking-widest font-black">{admin?.role === 'admin' ? 'Super Admin' : 'Admin'}</p>
           </div>
           <div className="size-11 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 p-[2px]">
@@ -109,7 +110,8 @@ const Navbar = () => {
           </div>
           <button 
             onClick={handleLogout}
-            className="p-3 rounded-2xl glass hover:bg-red-500/20 text-nykaa-text-muted hover:text-red-500 transition-all active:scale-95"
+            className="p-3 rounded-2xl glass hover:bg-red-500/10 text-nykaa-text-muted hover:text-red-500 transition-all active:scale-95"
+            title="End Session"
           >
             <LogOut size={20} />
           </button>

@@ -123,16 +123,16 @@ const Settings = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 p-1 bg-nykaa-surface/5 backdrop-blur-xl border border-nykaa-border rounded-none w-fit">
+      <div className="flex gap-2 p-1.5 bg-nykaa-surface border border-nykaa-border rounded-2xl w-fit shadow-sm">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`
-              flex items-center gap-2 px-6 py-2.5 rounded-none transition-all duration-300 font-bold text-sm
+              flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm
               ${activeTab === tab.id 
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg' 
-                : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-nykaa-surface/10'}
+                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' 
+                : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-pink-500/5'}
             `}
           >
             <tab.icon size={18} />
@@ -163,7 +163,7 @@ const Settings = () => {
                     )}
                   </div>
                 </div>
-                <label className="absolute -bottom-2 -right-2 p-2 bg-pink-500 text-white rounded-none shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
+                <label className="absolute -bottom-2 -right-2 p-2.5 bg-pink-500 text-white rounded-2xl shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
                   <Camera size={18} />
                   <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                 </label>
@@ -171,12 +171,12 @@ const Settings = () => {
               <div className="text-center sm:text-left">
                 <h3 className="text-xl font-bold mb-1 text-nykaa-text">Profile Photo</h3>
                 <p className="text-sm text-nykaa-text-muted mb-4">Update your photo for the admin header.</p>
-                <div className="flex gap-4">
-                  <label className="text-xs font-bold text-pink-500 hover:text-pink-400 cursor-pointer uppercase tracking-widest">
+                <div className="flex gap-4 justify-center sm:justify-start">
+                  <label className="text-xs font-bold text-pink-500 hover:text-pink-600 cursor-pointer uppercase tracking-widest">
                     Upload New
                     <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                   </label>
-                  <button type="button" onClick={() => setPreviewUrl(null)} className="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-widest">
+                  <button type="button" onClick={() => setPreviewUrl(null)} className="text-xs font-bold text-red-500 hover:text-red-600 uppercase tracking-widest">
                     Remove
                   </button>
                 </div>
@@ -194,7 +194,7 @@ const Settings = () => {
                     value={formData.username}
                     onChange={handleInputChange}
                     placeholder="admin_pro"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>
@@ -208,7 +208,7 @@ const Settings = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter full name"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>
@@ -223,7 +223,7 @@ const Settings = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="admin@nykaaprol.com"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>
@@ -237,7 +237,7 @@ const Settings = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="91xxxxxxxxxx"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>
@@ -251,7 +251,7 @@ const Settings = () => {
                     value={formData.address}
                     onChange={handleInputChange}
                     placeholder="Store location or office address"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>
@@ -266,7 +266,7 @@ const Settings = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="••••••••"
-                    className="input-glass pl-12 bg-nykaa-surface/5 text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                   />
                 </div>
               </div>

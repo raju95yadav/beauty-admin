@@ -116,7 +116,7 @@ const Dashboard = () => {
         >
           <div className="flex items-center justify-between mb-8">
              <h3 className="text-xl font-black text-nykaa-text">Revenue <span className="text-pink-500">Growth</span></h3>
-             <select className="bg-nykaa-surface/5 dark:bg-white/5 border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:bg-nykaa-surface/10 transition-colors text-nykaa-text">
+             <select className="bg-nykaa-surface border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:border-pink-500/50 transition-colors text-nykaa-text shadow-sm">
                <option>Last 7 Days</option>
                <option>Last 30 Days</option>
              </select>
@@ -126,8 +126,8 @@ const Dashboard = () => {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ff1493" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#ff1493" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
@@ -135,28 +135,28 @@ const Dashboard = () => {
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{fill: darkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', fontSize: 12, fontWeight: 'bold'}}
+                  tick={{fill: darkMode ? 'rgba(255,255,255,0.4)' : 'rgba(15,23,42,0.6)', fontSize: 12, fontWeight: 'bold'}}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{fill: darkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)', fontSize: 12, fontWeight: 'bold'}}
+                  tick={{fill: darkMode ? 'rgba(255,255,255,0.4)' : 'rgba(15,23,42,0.6)', fontSize: 12, fontWeight: 'bold'}}
                 />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: darkMode ? '#0f172a' : '#ffffff', 
-                    border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)', 
+                    backgroundColor: darkMode ? '#111827' : '#ffffff', 
+                    border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e2e8f0', 
                     borderRadius: '16px', 
-                    boxShadow: darkMode ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.05)'
+                    boxShadow: darkMode ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(15,23,42,0.08)'
                   }}
                   itemStyle={{color: darkMode ? '#fff' : '#0f172a', fontSize: '12px', fontWeight: 'bold'}}
-                  cursor={{stroke: '#ff1493', strokeWidth: 2}}
+                  cursor={{stroke: '#f43f5e', strokeWidth: 2}}
                 />
                 <Area 
                   type="monotone" 
                   dataKey="sales" 
-                  stroke="#ff1493" 
+                  stroke="#f43f5e" 
                   strokeWidth={4} 
                   fillOpacity={1} 
                   fill="url(#colorSales)"
@@ -192,8 +192,8 @@ const Dashboard = () => {
                 </Pie>
                 <Tooltip 
                    contentStyle={{
-                     backgroundColor: darkMode ? '#0f172a' : '#ffffff', 
-                     border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.05)', 
+                     backgroundColor: darkMode ? '#111827' : '#ffffff', 
+                     border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e2e8f0', 
                      borderRadius: '12px'
                    }}
                    itemStyle={{color: darkMode ? '#fff' : '#0f172a', fontSize: '11px'}}
@@ -206,14 +206,14 @@ const Dashboard = () => {
               </PieChart>
             </ResponsiveContainer>
           </div>
-           <div className="mt-6 pt-6 border-t border-white/5">
+           <div className="mt-6 pt-6 border-t border-nykaa-border">
               <div className="flex items-center justify-between mb-4">
-                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Main Driver</p>
+                 <p className="text-xs font-bold text-nykaa-text-muted uppercase tracking-widest">Main Driver</p>
                  <p className="text-xs font-black text-pink-500 uppercase tracking-widest">
                    {stats?.categoryData?.[0] ? `${stats.categoryData[0].name} (${Math.round((stats.categoryData[0].value / (stats?.products || 1)) * 100)}%)` : 'N/A'}
                  </p>
               </div>
-              <p className="text-[10px] text-gray-500 italic">{stats?.categoryData?.[0] ? `${stats.categoryData[0].name} products lead your catalog this quarter.` : 'No category data available.'}</p>
+              <p className="text-[10px] text-nykaa-text-muted font-medium italic">{stats?.categoryData?.[0] ? `${stats.categoryData[0].name} products lead your catalog this quarter.` : 'No category data available.'}</p>
            </div>
         </motion.div>
       </div>

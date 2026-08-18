@@ -111,12 +111,12 @@ const AddProduct = () => {
     <div className="max-w-5xl mx-auto pb-20">
       <div className="mb-12">
         <h1 className="text-4xl font-black text-nykaa-text tracking-tight flex items-center gap-4">
-          <div className="size-12 bg-nykaa-pink rounded-none flex items-center justify-center shadow-lg shadow-pink-500/20">
-            <PlusCircle className="text-white" size={28} />
+          <div className="size-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-500/20">
+            <PlusCircle className="text-white" size={26} />
           </div>
-          New <span className="text-pink-500">Beauty</span> Insight
+          New <span className="text-pink-500">Beauty</span> Item
         </h1>
-        <p className="text-nykaa-text-muted font-medium mt-3 ml-16">Create a premium listing for your latest collection.</p>
+        <p className="text-nykaa-text-muted font-medium mt-2 ml-16">Create a premium listing for your latest collection.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -129,8 +129,8 @@ const AddProduct = () => {
             className="glass-card p-10 space-y-8"
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="size-8 bg-purple-500/10 rounded-none flex items-center justify-center text-purple-500">
-                <Info size={16} />
+              <div className="size-9 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500">
+                <Info size={18} />
               </div>
               <h3 className="text-lg font-black text-nykaa-text uppercase tracking-wider">Basic Details</h3>
             </div>
@@ -144,7 +144,7 @@ const AddProduct = () => {
                     type="text"
                     name="name"
                     required
-                    className="input-glass pl-12 font-bold text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                     placeholder="Ex: Midnight Matte Red Lipstick"
                     value={product.name}
                     onChange={handleChange}
@@ -176,8 +176,8 @@ const AddProduct = () => {
             className="glass-card p-10"
           >
             <div className="flex items-center gap-3 mb-8">
-              <div className="size-8 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500">
-                <DollarSign size={16} />
+              <div className="size-9 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500">
+                <DollarSign size={18} />
               </div>
               <h3 className="text-lg font-black text-nykaa-text uppercase tracking-wider">Inventory & Pricing</h3>
             </div>
@@ -207,7 +207,7 @@ const AddProduct = () => {
                     type="number"
                     name="stock"
                     required
-                    className="input-glass pl-12 font-bold text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                     placeholder="Ex: 50"
                     value={product.stock}
                     onChange={handleChange}
@@ -227,8 +227,8 @@ const AddProduct = () => {
             className="glass-card p-8 flex flex-col items-center"
           >
             <div className="w-full flex items-center gap-3 mb-6">
-              <div className="size-8 bg-blue-500/10 rounded-none flex items-center justify-center text-blue-500">
-                <ImageIcon size={16} />
+              <div className="size-9 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
+                <ImageIcon size={18} />
               </div>
               <h3 className="text-sm font-black text-nykaa-text uppercase tracking-wider">Main Imagery</h3>
             </div>
@@ -238,7 +238,7 @@ const AddProduct = () => {
               onDragLeave={onDragLeave}
               onDrop={onDrop}
               className={`relative w-full aspect-[3/4] rounded-3xl border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-hidden cursor-pointer
-                ${isDragging ? 'border-pink-500 bg-pink-500/5' : 'border-nykaa-border bg-nykaa-bg dark:bg-white/5 hover:border-pink-500/50 hover:bg-nykaa-surface/10'}`}
+                ${isDragging ? 'border-pink-500 bg-pink-500/10' : 'border-nykaa-border bg-nykaa-surface hover:border-pink-500/50 hover:bg-pink-500/5'}`}
               onClick={() => fileInputRef.current.click()}
             >
               <input
@@ -258,7 +258,7 @@ const AddProduct = () => {
                 </div>
               ) : (
                 <div className="flex flex-col items-center text-center p-6">
-                  <div className="size-16 bg-nykaa-bg dark:bg-white/5 rounded-none flex items-center justify-center mb-4 text-nykaa-text-muted">
+                  <div className="size-16 bg-pink-500/10 text-pink-500 rounded-2xl flex items-center justify-center mb-4">
                     <UploadCloud size={32} />
                   </div>
                   <p className="text-nykaa-text font-bold text-sm">Drop your image</p>
@@ -308,7 +308,7 @@ const AddProduct = () => {
                   <input
                     type="text"
                     name="brand"
-                    className="input-glass pl-12 font-bold text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text"
                     placeholder="Ex: Nykaa"
                     value={product.brand}
                     onChange={handleChange}
@@ -320,7 +320,7 @@ const AddProduct = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary bg-black h-16 flex items-center justify-center gap-3 active:scale-[0.98] transition-all"
+              className="w-full btn-primary h-14 flex items-center justify-center gap-3 active:scale-[0.98] transition-all"
             >
               {loading ? (
                 <div className="size-6 border-4 border-white/90 border-t-white rounded-full animate-spin"></div>

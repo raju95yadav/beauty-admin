@@ -4,13 +4,20 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         nykaa: {
-          pink: '#ff1493',
-          dark: '#121212',
-          card: 'rgba(255, 255, 255, 0.05)',
+          pink: '#f43f5e',
+          purple: '#8b5cf6',
+          bg: 'var(--nykaa-bg)',
+          surface: 'var(--nykaa-surface)',
+          text: 'var(--nykaa-text)',
+          'text-muted': 'var(--nykaa-text-muted)',
+          border: 'var(--nykaa-border)',
+          dark: '#0f172a',
+          card: 'var(--glass-bg)',
         }
       },
       backdropBlur: {

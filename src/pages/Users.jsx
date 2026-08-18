@@ -99,12 +99,12 @@ const Users = () => {
             <input 
               type="text" 
               placeholder="Search by name, email, phone..."
-              className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
+              className="input-glass pl-12 text-sm font-medium text-nykaa-text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="glass p-3 rounded-none text-gray-400 hover:text-white transition-colors">
+          <button className="glass p-3.5 rounded-2xl text-nykaa-text-muted hover:text-nykaa-text transition-colors">
             <Filter size={20} />
           </button>
         </div>
@@ -129,12 +129,12 @@ const Users = () => {
           <motion.div 
             key={user._id}
             variants={itemVariants}
-            className="glass-card group hover:bg-nykaa-surface/5 transition-all p-4 lg:px-8 lg:py-6"
+            className="glass-card group hover:bg-pink-500/5 transition-all p-4 lg:px-8 lg:py-6"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-4">
               {/* User Identity */}
               <div className="lg:col-span-4 flex items-center gap-4">
-                <div className="size-12 rounded-none bg-gradient-to-br from-pink-500/10 to-purple-600/10 flex items-center justify-center text-pink-500 shadow-inner group-hover:scale-110 transition-transform">
+                <div className="size-12 rounded-2xl bg-gradient-to-br from-pink-500/10 to-purple-600/10 flex items-center justify-center text-pink-500 shadow-inner group-hover:scale-110 transition-transform">
                   <UserIcon size={24} />
                 </div>
                 <div>
@@ -151,7 +151,7 @@ const Users = () => {
               {/* Contact Info */}
               <div className="lg:col-span-3 space-y-1">
                 <div className="flex items-center gap-2 text-sm font-bold text-nykaa-text">
-                  <Mail size={14} className="text-pink-500/50" />
+                  <Mail size={14} className="text-pink-500/70" />
                   {user.email}
                 </div>
                 {user.phone && (
@@ -165,7 +165,7 @@ const Users = () => {
               {/* Joined Date */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 text-sm font-bold text-nykaa-text">
-                  <Calendar size={14} className="text-blue-500/50" />
+                  <Calendar size={14} className="text-blue-500/70" />
                   {new Date(user.createdAt).toLocaleDateString()}
                 </div>
               </div>
@@ -185,7 +185,7 @@ const Users = () => {
               <div className="lg:col-span-1 text-right">
                 <button 
                   onClick={() => { setSelectedUser(user); setShowDeleteModal(true); }}
-                  className="size-10 rounded-none bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white flex items-center justify-center transition-all ml-auto group/btn"
+                  className="size-10 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white flex items-center justify-center transition-all ml-auto group/btn"
                 >
                   <Trash2 size={18} className="group-hover/btn:scale-110 transition-transform" />
                 </button>
@@ -215,34 +215,34 @@ const Users = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => !isDeleting && setShowDeleteModal(false)}
-              className="absolute inset-0 bg-nykaa-bg/80 dark:bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             />
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass max-w-sm w-full p-10 rounded-[2.5rem] relative z-10 border border-nykaa-border shadow-2xl text-center"
+              className="bg-nykaa-surface max-w-sm w-full p-8 rounded-3xl relative z-10 border border-nykaa-border shadow-2xl text-center"
             >
-              <div className="size-20 bg-red-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner">
-                <AlertCircle className="text-red-500" size={40} />
+              <div className="size-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="text-red-500" size={32} />
               </div>
-              <h3 className="text-3xl font-black text-nykaa-text mb-3 tracking-tighter">Remove User?</h3>
-              <p className="text-nykaa-text-muted font-medium mb-10 leading-relaxed italic">
-                 Are you sure you want to remove <span className="text-nykaa-text font-black not-italic">"{selectedUser?.name || selectedUser?.email}"</span>? They will be logged out and their account will be deleted permanently.
+              <h3 className="text-2xl font-black text-nykaa-text mb-2 tracking-tight">Remove User?</h3>
+              <p className="text-nykaa-text-muted text-xs font-medium mb-8 leading-relaxed">
+                 Are you sure you want to remove <span className="text-nykaa-text font-black">"{selectedUser?.name || selectedUser?.email}"</span>? They will be logged out and deleted permanently.
               </p>
               
               <div className="flex flex-col gap-3">
                 <button 
                   disabled={isDeleting}
                   onClick={handleDeleteUser}
-                  className="w-full bg-red-500 py-4 rounded-none font-black text-xs uppercase tracking-[0.2em] text-white hover:bg-red-600 transition-all active:scale-95 shadow-xl shadow-red-500/20 disabled:opacity-50"
+                  className="w-full bg-red-500 py-3.5 rounded-2xl font-bold text-xs uppercase tracking-widest text-white hover:bg-red-600 transition-all active:scale-95 shadow-lg shadow-red-500/20 disabled:opacity-50"
                 >
                   {isDeleting ? 'Removing...' : 'Confirm Removal'}
                 </button>
                 <button 
                   disabled={isDeleting}
                   onClick={() => setShowDeleteModal(false)}
-                  className="w-full py-4 text-nykaa-text-muted font-black text-xs uppercase tracking-[0.2em] hover:text-nykaa-text transition-colors"
+                  className="w-full py-3.5 text-nykaa-text-muted font-bold text-xs uppercase tracking-widest hover:text-nykaa-text transition-colors"
                 >
                   Cancel
                 </button>

@@ -66,12 +66,12 @@ const Sidebar = () => {
             to={item.path}
             className={({ isActive }) => `
               relative flex items-center gap-4 px-4 py-4 rounded-2xl transition-all group overflow-hidden
-              ${isActive ? 'bg-pink-500/10 text-pink-500 shadow-sm' : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-nykaa-surface transition-all'}
+              ${isActive ? 'bg-pink-500/10 text-pink-500 font-bold shadow-sm' : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-pink-500/5 transition-all'}
             `}
           >
             {({ isActive }) => (
               <>
-                <item.icon size={22} className={`flex-shrink-0 ${isActive ? 'text-pink-500' : 'group-hover:text-pink-400'}`} />
+                <item.icon size={22} className={`flex-shrink-0 ${isActive ? 'text-pink-500' : 'group-hover:text-pink-500'}`} />
                 <AnimatePresence>
                   {!isCollapsed && (
                     <motion.span
