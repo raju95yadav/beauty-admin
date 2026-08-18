@@ -15,6 +15,10 @@ const Navbar = () => {
   React.useEffect(() => {
     fetchAdmin();
     fetchUnreadCount();
+
+    // Auto-poll notifications every 6 seconds for real-time admin alerts
+    const interval = setInterval(fetchUnreadCount, 6000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchUnreadCount = async () => {

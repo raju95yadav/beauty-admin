@@ -11,9 +11,12 @@ const NotificationPanel = ({ isOpen, onClose, onUnreadChange }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let interval;
     if (isOpen) {
       fetchNotifications();
+      interval = setInterval(fetchNotifications, 6000);
     }
+    return () => clearInterval(interval);
   }, [isOpen]);
 
   const fetchNotifications = async () => {
