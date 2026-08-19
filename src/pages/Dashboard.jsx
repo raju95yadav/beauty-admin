@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
-import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 import CountUp from 'react-countup';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -16,7 +17,13 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   DollarSign,
-  Activity
+  Activity,
+  AlertTriangle,
+  RefreshCw,
+  Box,
+  ChevronRight,
+  X,
+  AlertCircle
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -24,22 +31,49 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState([]);
-  const timerRef = useRef(null);
+  
+  // Quick Restock State
+  const [showRestockModal, setShowRestockModal] = useState(false);
+  const [restockProduct, setRestockProduct] = useState(null);
+  const [newStockVal, setNewStockVal] = useState(25);
+  const [updatingStock, setUpdatingStock] = useState(false);
+
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get('/admin/stats');
+      setStats(data);
+      setChartData(data.salesData || []);
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const { data } = await api.get('/admin/stats');
-        setStats(data);
-        setChartData(data.salesData || []);
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchStats();
   }, []);
+
+  const handleQuickRestock = async (e) => {
+    e.preventDefault();
+    if (!restockProduct) return;
+
+    try {
+      setUpdatingStock(true);
+      const formData = new FormData();
+      formData.append('stock', newStockVal);
+
+      await api.put(`/products/${restockProduct._id}`, formData);
+      toast.success(`Inventory restocked for "${restockProduct.name}" (${newStockVal} units)`);
+      setShowRestockModal(false);
+      fetchStats();
+    } catch (err) {
+      toast.error(err.message || 'Failed to update stock');
+    } finally {
+      setUpdatingStock(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -57,6 +91,7 @@ const Dashboard = () => {
   ];
 
   const COLORS = ['#ff1493', '#8b5cf6', '#3b82f6', '#10b981'];
+  const hasInventoryAlerts = (stats?.lowStockCount > 0 || stats?.outOfStockCount > 0);
 
   return (
     <div className="space-y-8 pb-12">
@@ -66,12 +101,72 @@ const Dashboard = () => {
           <p className="text-nykaa-text-muted font-medium mt-1">Real-time performance metrics for your GLAM Beauty project.</p>
         </div>
         <div className="flex items-center gap-3">
-           <button className="btn-primary flex items-center gap-2 text-sm">
-              <Activity size={16} />
-              Export Report
+           <button onClick={fetchStats} className="btn-glass p-3 text-nykaa-text hover:text-pink-500 transition-colors flex items-center gap-2 text-xs font-bold">
+              <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+              Sync Data
            </button>
         </div>
       </div>
+
+      {/* AUTOMATED LOW STOCK & RESTOCK ALERT BANNER */}
+      <AnimatePresence>
+        {hasInventoryAlerts && (
+          <motion.div 
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-[2.5rem] bg-gradient-to-r from-amber-500/20 via-red-500/20 to-pink-500/20 border border-amber-500/40 p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-xl"
+          >
+             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+                <div className="flex items-start gap-4">
+                   <div className="size-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+                      <AlertTriangle className="size-7 animate-pulse text-amber-400" />
+                   </div>
+                   <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                         <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-red-500 text-white">
+                           Automated Inventory Alert
+                         </span>
+                         <span className="text-xs font-bold text-nykaa-text-muted">
+                           {stats.lowStockCount || 0} Low Stock • {stats.outOfStockCount || 0} Out of Stock
+                         </span>
+                      </div>
+                      <h3 className="text-xl font-black text-nykaa-text tracking-tight">
+                        Action Required: Items Need Restocking
+                      </h3>
+                      <p className="text-xs text-nykaa-text-muted font-medium">
+                        Products with quantity $\le 5$ items automatically trigger low-stock alerts. Click any item below to restock immediately.
+                      </p>
+
+                      {/* Items Pills */}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                         {stats.lowStockItems?.map((item) => (
+                           <button
+                             key={item._id}
+                             onClick={() => { setRestockProduct(item); setNewStockVal(25); setShowRestockModal(true); }}
+                             className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all border flex items-center gap-1.5 hover:scale-105 ${
+                               item.stock === 0
+                                 ? 'bg-red-500/20 border-red-500/50 text-red-400'
+                                 : 'bg-amber-500/20 border-amber-500/50 text-amber-300'
+                             }`}
+                           >
+                              <Box className="size-3" />
+                              {item.name} ({item.stock === 0 ? 'OUT OF STOCK' : `${item.stock} LEFT`})
+                           </button>
+                         ))}
+                      </div>
+                   </div>
+                </div>
+
+                <Link
+                  to="/manage-products"
+                  className="btn-primary py-3.5 px-6 rounded-2xl text-xs uppercase tracking-widest font-black shrink-0 shadow-lg"
+                >
+                  Manage All Inventory
+                </Link>
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -218,7 +313,7 @@ const Dashboard = () => {
         </motion.div>
       </div>
 
-      {/* Recent Activity Table (Placeholder Look) */}
+      {/* Recent Orders Section */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -227,7 +322,7 @@ const Dashboard = () => {
       >
         <div className="flex items-center justify-between mb-8">
            <h3 className="text-xl font-black text-nykaa-text">Recent <span className="text-pink-500">Orders</span></h3>
-           <button className="text-xs font-black text-pink-500 uppercase tracking-widest hover:underline">View All</button>
+           <Link to="/orders" className="text-xs font-black text-pink-500 uppercase tracking-widest hover:underline">View All Pipeline</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -278,9 +373,82 @@ const Dashboard = () => {
           </table>
         </div>
       </motion.div>
+
+      {/* QUICK RESTOCK MODAL */}
+      <AnimatePresence>
+        {showRestockModal && restockProduct && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+             <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               exit={{ opacity: 0 }}
+               onClick={() => setShowRestockModal(false)}
+               className="absolute inset-0 bg-black/80 backdrop-blur-md"
+             />
+             <motion.div 
+               initial={{ opacity: 0, scale: 0.9, y: 20 }}
+               animate={{ opacity: 1, scale: 1, y: 0 }}
+               exit={{ opacity: 0, scale: 0.9, y: 20 }}
+               className="glass max-w-md w-full p-8 rounded-[2.5rem] relative z-10 border border-nykaa-border shadow-2xl space-y-6"
+             >
+                <div className="flex justify-between items-center pb-4 border-b border-nykaa-border">
+                   <div className="flex items-center gap-3">
+                      <div className="size-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                         <Box size={20} />
+                      </div>
+                      <div>
+                         <h3 className="text-xl font-black text-nykaa-text">Quick Restock</h3>
+                         <p className="text-[10px] font-bold text-nykaa-text-muted uppercase">Updating Store Inventory</p>
+                      </div>
+                   </div>
+                   <button onClick={() => setShowRestockModal(false)} className="p-2 text-nykaa-text-muted hover:text-nykaa-text">
+                      <X size={20} />
+                   </button>
+                </div>
+
+                <div className="space-y-4">
+                   <div className="bg-nykaa-surface/5 p-4 rounded-2xl border border-nykaa-border space-y-1">
+                      <p className="text-xs font-black text-nykaa-text">{restockProduct.name}</p>
+                      <p className="text-[10px] text-nykaa-text-muted">Current Stock: <strong className="text-amber-500">{restockProduct.stock} items</strong></p>
+                   </div>
+
+                   <form onSubmit={handleQuickRestock} className="space-y-6">
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">New Stock Quantity</label>
+                         <input 
+                           type="number"
+                           required
+                           min="1"
+                           className="input-glass font-black text-lg text-pink-500"
+                           value={newStockVal}
+                           onChange={(e) => setNewStockVal(Number(e.target.value))}
+                         />
+                      </div>
+
+                      <div className="flex gap-3">
+                         <button 
+                           type="button" 
+                           onClick={() => setShowRestockModal(false)}
+                           className="flex-1 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-nykaa-text-muted glass"
+                         >
+                            Cancel
+                         </button>
+                         <button 
+                           type="submit"
+                           disabled={updatingStock}
+                           className="flex-1 btn-primary py-3.5 rounded-xl text-xs uppercase tracking-widest font-black flex items-center justify-center gap-2 shadow-lg"
+                         >
+                            {updatingStock ? 'Saving...' : 'Save Restock'}
+                         </button>
+                      </div>
+                   </form>
+                </div>
+             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default Dashboard;
-

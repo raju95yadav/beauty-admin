@@ -18,7 +18,9 @@ import {
   Image as ImageIcon,
   MoreVertical,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  AlertTriangle,
+  RefreshCw
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +28,7 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [stockFilter, setStockFilter] = useState('ALL'); // 'ALL' | 'LOW_STOCK' | 'OUT_OF_STOCK' | 'IN_STOCK'
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +41,7 @@ const ManageProducts = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('/products?limit=100');
+      const { data } = await api.get('/products?limit=200');
       setProducts(data.products || []);
     } catch (error) {
       toast.error(error.message || 'Failed to load products');
@@ -86,28 +89,42 @@ const ManageProducts = () => {
     }
   };
 
-  const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Compute inventory alert counts
+  const lowStockCount = products.filter(p => p.stock > 0 && p.stock <= 5).length;
+  const outOfStockCount = products.filter(p => p.stock === 0).length;
+  const inStockCount = products.filter(p => p.stock > 5).length;
+
+  const filteredProducts = products.filter(p => {
+    const matchesSearch = 
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.brand && p.brand.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    if (!matchesSearch) return false;
+
+    if (stockFilter === 'LOW_STOCK') return p.stock > 0 && p.stock <= 5;
+    if (stockFilter === 'OUT_OF_STOCK') return p.stock === 0;
+    if (stockFilter === 'IN_STOCK') return p.stock > 5;
+    return true;
+  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.05
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.95 },
     visible: { opacity: 1, scale: 1 }
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-16">
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
@@ -120,7 +137,7 @@ const ManageProducts = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
             <input 
               type="text" 
-              placeholder="Search by name, category..."
+              placeholder="Search by name, category, brand..."
               className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -134,6 +151,49 @@ const ManageProducts = () => {
             Add New Item
           </button>
         </div>
+      </div>
+
+      {/* Stock Filter Tabs Bar */}
+      <div className="glass-card p-4 flex flex-wrap items-center justify-between gap-4">
+         <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar">
+            {[
+              { id: 'ALL', label: 'All Products', count: products.length },
+              { id: 'LOW_STOCK', label: 'Low Stock Alerts (<=5)', count: lowStockCount, isWarning: true },
+              { id: 'OUT_OF_STOCK', label: 'Out of Stock (0)', count: outOfStockCount, isDanger: true },
+              { id: 'IN_STOCK', label: 'Healthy Stock (>5)', count: inStockCount },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setStockFilter(tab.id)}
+                className={`px-4 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-wider transition-all border flex items-center gap-2 ${
+                  stockFilter === tab.id
+                    ? tab.isDanger 
+                      ? 'bg-red-600 text-white border-red-500 shadow-md'
+                      : tab.isWarning
+                        ? 'bg-amber-500 text-white border-amber-400 shadow-md'
+                        : 'bg-pink-600 text-white border-pink-500 shadow-md'
+                    : 'bg-nykaa-surface/5 border-nykaa-border text-nykaa-text-muted hover:text-nykaa-text'
+                }`}
+              >
+                {tab.isDanger && <AlertCircle size={14} className="text-red-300" />}
+                {tab.isWarning && <AlertTriangle size={14} className="text-amber-300" />}
+                {tab.label}
+                <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                  stockFilter === tab.id ? 'bg-white/20 text-white' : 'bg-nykaa-surface/10 text-nykaa-text-muted'
+                }`}>
+                  {tab.count}
+                </span>
+              </button>
+            ))}
+         </div>
+
+         <button 
+           onClick={fetchProducts}
+           className="btn-glass p-2.5 text-nykaa-text hover:text-pink-500 transition-colors flex items-center gap-2 text-xs font-bold"
+           title="Sync Inventory"
+         >
+            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+         </button>
       </div>
 
       {loading ? (
@@ -151,13 +211,13 @@ const ManageProducts = () => {
           <div className="size-24 bg-pink-500/10 rounded-full flex items-center justify-center mb-6">
             <Package className="text-pink-500" size={48} />
           </div>
-          <h3 className="text-2xl font-black text-nykaa-text">No items match your search</h3>
-          <p className="text-nykaa-text-muted font-medium mt-2 max-w-sm">We couldn't find any products matching "{searchTerm}". Try different keywords or add a new product.</p>
+          <h3 className="text-2xl font-black text-nykaa-text">No items match your filter</h3>
+          <p className="text-nykaa-text-muted font-medium mt-2 max-w-sm">We couldn't find any products matching your current stock filter or search term.</p>
           <button 
-             onClick={() => setSearchTerm('')}
+             onClick={() => { setSearchTerm(''); setStockFilter('ALL'); }}
              className="mt-8 text-pink-500 font-black uppercase tracking-widest text-xs hover:underline"
           >
-            Clear Search
+            Clear Filters
           </button>
         </motion.div>
       ) : (
@@ -167,60 +227,87 @@ const ManageProducts = () => {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          {filteredProducts.map((p) => (
-            <motion.div 
-              variants={itemVariants}
-              key={p._id} 
-              className="glass-card flex flex-col group"
-            >
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4">
-                <img 
-                  src={p.images?.[0]?.url || 'https://placehold.co/400x500?text=No+Image'} 
-                  alt={p.name} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                   <div className="flex gap-2">
-                     <button 
-                        onClick={() => { setSelectedProduct(p); setIsEditing(true); }}
-                        className="flex-1 bg-white text-black py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-pink-500 hover:text-white transition-all active:scale-95"
-                     >
-                       Edit Product
-                     </button>
-                     <button 
-                        onClick={() => { setSelectedProduct(p); setShowDeleteModal(true); }}
-                        className="size-11 bg-red-500 text-white rounded-xl flex items-center justify-center hover:bg-red-600 transition-colors active:scale-95"
-                     >
-                       <Trash2 size={18} />
-                     </button>
-                   </div>
-                </div>
-                <div className="absolute top-4 right-4">
-                   <span className="glass px-3 py-1.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest">
-                     {p.category}
-                   </span>
-                </div>
-              </div>
+          {filteredProducts.map((p) => {
+            const isOutOfStock = p.stock === 0;
+            const isLowStock = p.stock > 0 && p.stock <= 5;
 
-              <div className="flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-black text-nykaa-text leading-tight flex-1 pr-4 line-clamp-1">{p.name}</h3>
-                  <p className="text-xl font-black text-pink-500">₹{p.price}</p>
+            return (
+              <motion.div 
+                variants={itemVariants}
+                key={p._id} 
+                className={`glass-card flex flex-col group relative ${
+                  isOutOfStock ? 'border-red-500/40 bg-red-500/5' : isLowStock ? 'border-amber-500/40 bg-amber-500/5' : ''
+                }`}
+              >
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4">
+                  <img 
+                    src={p.images?.[0]?.url || 'https://placehold.co/400x500?text=No+Image'} 
+                    alt={p.name} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                     <div className="flex gap-2">
+                       <button 
+                          onClick={() => { setSelectedProduct(p); setIsEditing(true); }}
+                          className="flex-1 bg-white text-black py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-pink-500 hover:text-white transition-all active:scale-95 shadow-lg"
+                       >
+                         Edit & Restock
+                       </button>
+                       <button 
+                          onClick={() => { setSelectedProduct(p); setShowDeleteModal(true); }}
+                          className="size-11 bg-red-500 text-white rounded-xl flex items-center justify-center hover:bg-red-600 transition-colors active:scale-95 shadow-lg"
+                       >
+                         <Trash2 size={18} />
+                       </button>
+                     </div>
+                  </div>
+
+                  {/* Top Category Badge */}
+                  <div className="absolute top-3 left-3">
+                     <span className="glass px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-widest backdrop-blur-md">
+                       {p.category}
+                     </span>
+                  </div>
+
+                  {/* Stock Status Badge */}
+                  <div className="absolute top-3 right-3">
+                     {isOutOfStock ? (
+                       <span className="bg-red-600 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 animate-pulse">
+                         <AlertCircle size={10} /> Out of Stock
+                       </span>
+                     ) : isLowStock ? (
+                       <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg flex items-center gap-1 animate-bounce">
+                         <AlertTriangle size={10} /> {p.stock} Left (Low)
+                       </span>
+                     ) : (
+                       <span className="bg-emerald-500/90 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest backdrop-blur-md">
+                         {p.stock} in stock
+                       </span>
+                     )}
+                  </div>
                 </div>
-                <div className="flex items-center gap-4 text-xs font-bold text-nykaa-text-muted mt-auto pt-4 border-t border-nykaa-border">
-                   <div className="flex items-center gap-1">
-                      <Box size={14} className="text-emerald-500" />
-                      <span>{p.stock} in stock</span>
-                   </div>
-                   <div className="h-4 w-px bg-white/10"></div>
-                   <div className="flex items-center gap-1">
-                      <Tag size={14} className="text-blue-500" />
-                      <span>{p.brand}</span>
-                   </div>
+
+                <div className="flex-1 flex flex-col">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-base font-black text-nykaa-text leading-tight flex-1 pr-3 line-clamp-1">{p.name}</h3>
+                    <p className="text-lg font-black text-pink-500">₹{p.price}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-bold text-nykaa-text-muted mt-auto pt-4 border-t border-nykaa-border">
+                     <div className="flex items-center gap-1.5">
+                        <Box size={14} className={isOutOfStock ? 'text-red-500' : isLowStock ? 'text-amber-500' : 'text-emerald-500'} />
+                        <span className={isOutOfStock ? 'text-red-400 font-black' : isLowStock ? 'text-amber-400 font-black' : 'text-nykaa-text'}>
+                          {p.stock} units left
+                        </span>
+                     </div>
+                     <span className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest bg-nykaa-surface/10 px-2 py-0.5 rounded-lg">
+                        {p.brand || 'Nykaa'}
+                     </span>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       )}
 
@@ -268,7 +355,7 @@ const ManageProducts = () => {
         )}
       </AnimatePresence>
 
-      {/* Edit Product Modal */}
+      {/* Edit & Restock Product Modal */}
       <AnimatePresence>
         {isEditing && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -291,8 +378,8 @@ const ManageProducts = () => {
                       <Edit2 size={24} />
                    </div>
                    <div>
-                      <h3 className="text-3xl font-black text-nykaa-text tracking-tighter">Edit <span className="text-pink-500">Beauty</span> Product</h3>
-                      <p className="text-nykaa-text-muted text-xs font-bold uppercase tracking-widest mt-1">Refining Product Details</p>
+                      <h3 className="text-3xl font-black text-nykaa-text tracking-tighter">Edit & <span className="text-pink-500">Restock</span> Product</h3>
+                      <p className="text-nykaa-text-muted text-xs font-bold uppercase tracking-widest mt-1">Update Inventory Stock & Details</p>
                    </div>
                 </div>
                 <button 
@@ -350,15 +437,18 @@ const ManageProducts = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                         <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Inventory Stock</label>
+                         <label className="text-[10px] font-black text-amber-400 uppercase tracking-widest px-1 flex items-center gap-1">
+                           <Box size={12} /> Restock Inventory
+                         </label>
                          <div className="relative">
-                           <Box className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
+                           <Box className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-500" size={18} />
                            <input 
                              type="number"
-                             className="input-glass pl-12 font-bold text-nykaa-text"
+                             min="0"
+                             className="input-glass pl-12 font-black text-lg text-amber-400 border-amber-500/40 focus:border-amber-500"
                              placeholder="Ex: 50"
                              value={selectedProduct.stock}
-                             onChange={(e) => setSelectedProduct({...selectedProduct, stock: e.target.value})}
+                             onChange={(e) => setSelectedProduct({...selectedProduct, stock: Number(e.target.value)})}
                            />
                          </div>
                       </div>
@@ -425,7 +515,7 @@ const ManageProducts = () => {
                      type="submit" 
                      className="flex-[2] btn-primary py-5 rounded-2xl flex items-center justify-center gap-3"
                    >
-                     <span className="text-xs uppercase tracking-[0.2em]">Update Inventory</span>
+                     <span className="text-xs uppercase tracking-[0.2em]">Update Inventory & Stock</span>
                      <ChevronRight size={18} />
                    </button>
                 </div>
@@ -439,4 +529,3 @@ const ManageProducts = () => {
 };
 
 export default ManageProducts;
-
