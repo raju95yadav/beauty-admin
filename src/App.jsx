@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import Users from './pages/Users';
+import Subscribers from './pages/Subscribers';
 import Orders from './pages/Orders';
 import Settings from './pages/Settings';
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/add-product" element={<AddProduct />} />
             <Route path="/manage-products" element={<ManageProducts />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/subscribers" element={<Subscribers />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

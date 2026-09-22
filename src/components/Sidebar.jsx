@@ -10,7 +10,8 @@ import {
   Sparkles,
   Layers,
   Users,
-  Package
+  Package,
+  Mail
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -22,6 +23,7 @@ const Sidebar = () => {
     { title: 'Manage Products', icon: Package, path: '/manage-products' },
     { title: 'Add Product', icon: PlusCircle, path: '/add-product' },
     { title: 'Users', icon: Users, path: '/users' },
+    { title: 'Subscribers', icon: Mail, path: '/subscribers' },
     { title: 'Settings', icon: Settings, path: '/settings' },
   ];
 
