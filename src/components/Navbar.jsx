@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { Sun, Moon, LogOut, Search, Bell, User } from 'lucide-react';
+import { Sun, Moon, LogOut, Search, Bell, User, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import api from '../services/api';
@@ -11,6 +11,7 @@ const Navbar = () => {
   const [admin, setAdmin] = React.useState(null);
   const [isNotifOpen, setIsNotifOpen] = React.useState(false);
   const [unreadCount, setUnreadCount] = React.useState(0);
+  const storeUrl = import.meta.env.VITE_STORE_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5173' : 'https://beauty-glam-five.vercel.app');
 
   React.useEffect(() => {
     fetchAdmin();
@@ -50,7 +51,7 @@ const Navbar = () => {
       },
     });
     setTimeout(() => {
-      window.location.href = 'http://localhost:5173/login';
+      window.location.href = '/login';
     }, 1200);
   };
 
@@ -67,7 +68,18 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        <a
+          href={storeUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl glass hover:bg-pink-500/10 transition-all text-xs font-bold text-nykaa-text-muted hover:text-pink-500 active:scale-95"
+          title="Open customer storefront"
+        >
+          <span>Live Store</span>
+          <ExternalLink size={14} />
+        </a>
+
         <button 
           onClick={toggleTheme}
           className="p-3 rounded-2xl glass hover:bg-pink-500/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"

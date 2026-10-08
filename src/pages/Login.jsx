@@ -25,6 +25,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
+  const storeUrl = import.meta.env.VITE_STORE_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5173' : 'https://beauty-glam-five.vercel.app');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -110,7 +111,7 @@ const Login = () => {
           className="flex items-center gap-2"
         >
           <a
-            href="http://localhost:5174"
+            href={storeUrl}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-white/50 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-pink-600 dark:hover:text-pink-400 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all shadow-sm"
