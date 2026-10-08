@@ -78,30 +78,30 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="size-12 border-4 border-pink-500/30 border-t-pink-500 rounded-full animate-spin"></div>
+        <div className="size-12 border-4 border-[#C5A880]/30 border-t-[#0D0D0D] dark:border-t-[#C5A880] rounded-full animate-spin"></div>
       </div>
     );
   }
 
   const statCards = [
-    { title: 'Total Revenue', value: stats?.revenue || 0, icon: <DollarSign size={24} />, color: 'from-green-500/20 to-emerald-500/20', iconColor: 'text-green-500', prefix: '₹', path: '/dashboard' },
-    { title: 'Total Orders', value: stats?.orders || 0, icon: <ShoppingCart size={24} />, color: 'from-pink-500/20 to-rose-500/20', iconColor: 'text-pink-500', path: '/orders' },
-    { title: 'Products', value: stats?.products || 0, icon: <Package size={24} />, color: 'from-blue-500/20 to-indigo-500/20', iconColor: 'text-blue-500', path: '/manage-products' },
-    { title: 'Total Users', value: stats?.users || 0, icon: <Users size={24} />, color: 'from-purple-500/20 to-violet-500/20', iconColor: 'text-purple-500', path: '/users' },
+    { title: 'Total Revenue', value: stats?.revenue || 0, icon: <DollarSign size={24} />, color: 'from-[#C5A880]/20 to-[#0D0D0D]/10', iconColor: 'text-[#C5A880]', prefix: '₹', path: '/dashboard' },
+    { title: 'Total Orders', value: stats?.orders || 0, icon: <ShoppingCart size={24} />, color: 'from-[#0D0D0D]/20 to-[#C5A880]/20', iconColor: 'text-[#0D0D0D] dark:text-[#C5A880]', path: '/orders' },
+    { title: 'Products', value: stats?.products || 0, icon: <Package size={24} />, color: 'from-[#6E6D7A]/20 to-[#C5A880]/15', iconColor: 'text-[#6E6D7A] dark:text-[#FAF9F6]', path: '/manage-products' },
+    { title: 'Total Users', value: stats?.users || 0, icon: <Users size={24} />, color: 'from-[#C5A880]/25 to-stone-800/10', iconColor: 'text-[#C5A880]', path: '/users' },
   ];
 
-  const COLORS = ['#ff1493', '#8b5cf6', '#3b82f6', '#10b981'];
+  const COLORS = ['#0D0D0D', '#C5A880', '#6E6D7A', '#9E8055'];
   const hasInventoryAlerts = (stats?.lowStockCount > 0 || stats?.outOfStockCount > 0);
 
   return (
     <div className="space-y-8 pb-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-black text-nykaa-text tracking-tight animate-fade-in">Analytics <span className="text-pink-500">Overview</span></h1>
+          <h1 className="text-4xl font-black text-nykaa-text tracking-tight animate-fade-in">Analytics <span className="text-[#C5A880]">Overview</span></h1>
           <p className="text-nykaa-text-muted font-medium mt-1">Real-time performance metrics for your GLAM Beauty project.</p>
         </div>
         <div className="flex items-center gap-3">
-           <button onClick={fetchStats} className="btn-glass p-3 text-nykaa-text hover:text-pink-500 transition-colors flex items-center gap-2 text-xs font-bold">
+           <button onClick={fetchStats} className="btn-glass p-3 text-nykaa-text hover:text-[#C5A880] transition-colors flex items-center gap-2 text-xs font-bold">
               <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
               Sync Data
            </button>
@@ -114,7 +114,7 @@ const Dashboard = () => {
           <motion.div 
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-[2.5rem] bg-gradient-to-r from-amber-500/20 via-red-500/20 to-pink-500/20 border border-amber-500/40 p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-xl"
+            className="rounded-[2.5rem] bg-gradient-to-r from-amber-500/15 via-[#C5A880]/15 to-amber-500/10 border border-[#C5A880]/30 p-6 md:p-8 backdrop-blur-md relative overflow-hidden shadow-xl"
           >
              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
                 <div className="flex items-start gap-4">
@@ -210,8 +210,8 @@ const Dashboard = () => {
           className="lg:col-span-2 glass-card min-h-[450px] flex flex-col"
         >
           <div className="flex items-center justify-between mb-8">
-             <h3 className="text-xl font-black text-nykaa-text">Revenue <span className="text-pink-500">Growth</span></h3>
-             <select className="bg-nykaa-surface border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:border-pink-500/50 transition-colors text-nykaa-text shadow-sm">
+             <h3 className="text-xl font-black text-nykaa-text">Revenue <span className="text-[#C5A880]">Growth</span></h3>
+             <select className="bg-nykaa-surface border border-nykaa-border rounded-xl px-4 py-2 text-xs font-bold outline-none cursor-pointer hover:border-[#C5A880] transition-colors text-nykaa-text shadow-sm">
                <option>Last 7 Days</option>
                <option>Last 30 Days</option>
              </select>
@@ -221,38 +221,38 @@ const Dashboard = () => {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#C5A880" stopOpacity={0.35}/>
+                    <stop offset="95%" stopColor="#C5A880" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(18,18,20,0.06)"} />
                 <XAxis 
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{fill: darkMode ? 'rgba(255,255,255,0.4)' : 'rgba(15,23,42,0.6)', fontSize: 12, fontWeight: 'bold'}}
+                  tick={{fill: darkMode ? 'rgba(250,249,246,0.6)' : '#6E6D7A', fontSize: 12, fontWeight: 'bold'}}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{fill: darkMode ? 'rgba(255,255,255,0.4)' : 'rgba(15,23,42,0.6)', fontSize: 12, fontWeight: 'bold'}}
+                  tick={{fill: darkMode ? 'rgba(250,249,246,0.6)' : '#6E6D7A', fontSize: 12, fontWeight: 'bold'}}
                 />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: darkMode ? '#111827' : '#ffffff', 
-                    border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e2e8f0', 
+                    backgroundColor: darkMode ? '#18181B' : '#ffffff', 
+                    border: darkMode ? '1px solid #2A2A2E' : '1px solid #EFECE6', 
                     borderRadius: '16px', 
-                    boxShadow: darkMode ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(15,23,42,0.08)'
+                    boxShadow: darkMode ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(18,18,20,0.08)'
                   }}
-                  itemStyle={{color: darkMode ? '#fff' : '#0f172a', fontSize: '12px', fontWeight: 'bold'}}
-                  cursor={{stroke: '#f43f5e', strokeWidth: 2}}
+                  itemStyle={{color: darkMode ? '#FAF9F6' : '#121214', fontSize: '12px', fontWeight: 'bold'}}
+                  cursor={{stroke: '#C5A880', strokeWidth: 2}}
                 />
                 <Area 
                   type="monotone" 
                   dataKey="sales" 
-                  stroke="#f43f5e" 
-                  strokeWidth={4} 
+                  stroke="#C5A880" 
+                  strokeWidth={3.5} 
                   fillOpacity={1} 
                   fill="url(#colorSales)"
                   animationDuration={1000}
@@ -268,7 +268,7 @@ const Dashboard = () => {
           transition={{ delay: 0.2 }}
           className="glass-card flex flex-col"
         >
-          <h3 className="text-xl font-black text-nykaa-text mb-8">Category <span className="text-purple-500">Share</span></h3>
+          <h3 className="text-xl font-black text-nykaa-text mb-8">Category <span className="text-[#C5A880]">Share</span></h3>
           <div className="flex-1 w-full flex items-center justify-center min-h-[300px] relative">
             <ResponsiveContainer width="100%" height={300} debounce={50}>
               <PieChart>
@@ -287,11 +287,11 @@ const Dashboard = () => {
                 </Pie>
                 <Tooltip 
                    contentStyle={{
-                     backgroundColor: darkMode ? '#111827' : '#ffffff', 
-                     border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e2e8f0', 
+                     backgroundColor: darkMode ? '#18181B' : '#ffffff', 
+                     border: darkMode ? '1px solid #2A2A2E' : '1px solid #EFECE6', 
                      borderRadius: '12px'
                    }}
-                   itemStyle={{color: darkMode ? '#fff' : '#0f172a', fontSize: '11px'}}
+                   itemStyle={{color: darkMode ? '#FAF9F6' : '#121214', fontSize: '11px', fontWeight: 'bold'}}
                 />
                 <Legend 
                   verticalAlign="bottom" 
@@ -304,7 +304,7 @@ const Dashboard = () => {
            <div className="mt-6 pt-6 border-t border-nykaa-border">
               <div className="flex items-center justify-between mb-4">
                  <p className="text-xs font-bold text-nykaa-text-muted uppercase tracking-widest">Main Driver</p>
-                 <p className="text-xs font-black text-pink-500 uppercase tracking-widest">
+                 <p className="text-xs font-black text-[#C5A880] uppercase tracking-widest">
                    {stats?.categoryData?.[0] ? `${stats.categoryData[0].name} (${Math.round((stats.categoryData[0].value / (stats?.products || 1)) * 100)}%)` : 'N/A'}
                  </p>
               </div>
@@ -321,8 +321,8 @@ const Dashboard = () => {
         className="glass-card overflow-hidden"
       >
         <div className="flex items-center justify-between mb-8">
-           <h3 className="text-xl font-black text-nykaa-text">Recent <span className="text-pink-500">Orders</span></h3>
-           <Link to="/orders" className="text-xs font-black text-pink-500 uppercase tracking-widest hover:underline">View All Pipeline</Link>
+           <h3 className="text-xl font-black text-nykaa-text">Recent <span className="text-[#C5A880]">Orders</span></h3>
+           <Link to="/orders" className="text-xs font-black text-[#121214] dark:text-[#FAF9F6] hover:text-[#C5A880] uppercase tracking-widest hover:underline transition-colors">View All Pipeline</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -338,22 +338,22 @@ const Dashboard = () => {
             <tbody className="divide-y divide-nykaa-border">
               {(stats?.recentOrders && stats.recentOrders.length > 0) ? stats.recentOrders.map((order, i) => {
                 const statusColors = {
-                  'Delivered': 'bg-green-500/10 text-green-500',
-                  'Processing': 'bg-yellow-500/10 text-yellow-500',
-                  'Shipped': 'bg-blue-500/10 text-blue-500',
-                  'Packed': 'bg-purple-500/10 text-purple-500',
-                  'Cancelled': 'bg-red-500/10 text-red-500',
+                  'Delivered': 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20',
+                  'Processing': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20',
+                  'Shipped': 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20',
+                  'Packed': 'bg-[#C5A880]/15 text-[#C5A880] border border-[#C5A880]/30',
+                  'Cancelled': 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20',
                 };
-                const statusColor = statusColors[order.orderStatus] || 'bg-gray-500/10 text-gray-500';
+                const statusColor = statusColors[order.orderStatus] || 'bg-gray-500/10 text-gray-500 border border-gray-500/20';
                 const customerName = order.user?.name || 'Guest';
                 const initials = customerName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
                 const firstItem = order.orderItems?.[0]?.name || 'N/A';
                 return (
-                <tr key={order._id || i} className="group hover:bg-nykaa-surface/5 transition-colors">
+                <tr key={order._id || i} className="group hover:bg-[#C5A880]/5 transition-colors">
                   <td className="py-6 text-sm font-bold text-nykaa-text-muted">#{order._id?.toString().slice(-6).toUpperCase()}</td>
                   <td className="py-6">
                     <div className="flex items-center gap-3">
-                      <div className="size-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 text-[10px] font-black">{initials}</div>
+                      <div className="size-8 rounded-lg bg-[#0D0D0D] text-[#C5A880] flex items-center justify-center text-[10px] font-black">{initials}</div>
                       <span className="text-sm font-bold text-nykaa-text">{customerName}</span>
                     </div>
                   </td>
@@ -419,7 +419,7 @@ const Dashboard = () => {
                            type="number"
                            required
                            min="1"
-                           className="input-glass font-black text-lg text-pink-500"
+                           className="input-glass font-black text-lg text-[#0D0D0D] dark:text-[#FAF9F6]"
                            value={newStockVal}
                            onChange={(e) => setNewStockVal(Number(e.target.value))}
                          />

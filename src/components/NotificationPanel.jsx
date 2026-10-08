@@ -83,9 +83,9 @@ const NotificationPanel = ({ isOpen, onClose, onUnreadChange }) => {
 
   const getIcon = (type) => {
     switch (type) {
-      case 'PRODUCT': return <Package className="text-pink-500" size={18} />;
-      case 'ORDER': return <ShoppingBag className="text-purple-500" size={18} />;
-      case 'USER': return <UserIcon className="text-blue-500" size={18} />;
+      case 'PRODUCT': return <Package className="text-[#C5A880]" size={18} />;
+      case 'ORDER': return <ShoppingBag className="text-[#0D0D0D] dark:text-[#C5A880]" size={18} />;
+      case 'USER': return <UserIcon className="text-stone-600 dark:text-stone-300" size={18} />;
       default: return <Info className="text-gray-500" size={18} />;
     }
   };
@@ -103,7 +103,7 @@ const NotificationPanel = ({ isOpen, onClose, onUnreadChange }) => {
           >
             <div className="p-4 border-b border-nykaa-border flex items-center justify-between bg-nykaa-surface/10 backdrop-blur-md">
               <div className="flex items-center gap-2">
-                <Bell size={18} className="text-pink-500" />
+                <Bell size={18} className="text-[#C5A880]" />
                 <h3 className="font-black text-sm uppercase tracking-widest text-nykaa-text">Notifications</h3>
               </div>
               {notifications.length > 0 && (
@@ -120,7 +120,7 @@ const NotificationPanel = ({ isOpen, onClose, onUnreadChange }) => {
             <div className="max-h-[450px] overflow-y-auto scrollbar-hide">
               {loading ? (
                 <div className="p-10 flex flex-col items-center justify-center gap-4">
-                  <div className="size-8 border-4 border-pink-500/30 border-t-pink-500 rounded-full animate-spin" />
+                  <div className="size-8 border-4 border-[#C5A880]/30 border-t-[#0D0D0D] dark:border-t-[#C5A880] rounded-full animate-spin" />
                   <p className="text-xs font-bold text-nykaa-text-muted">Loading logs...</p>
                 </div>
               ) : notifications.length === 0 ? (
@@ -139,7 +139,7 @@ const NotificationPanel = ({ isOpen, onClose, onUnreadChange }) => {
                       onClick={() => handleNotificationClick(n)}
                       className={`
                         p-4 flex gap-4 transition-all cursor-pointer group hover:bg-nykaa-surface/5
-                        ${!n.isRead ? 'bg-pink-500/5' : ''}
+                        ${!n.isRead ? 'bg-[#C5A880]/10' : ''}
                       `}
                     >
                       <div className="size-10 rounded-2xl bg-nykaa-surface/10 border border-nykaa-border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">

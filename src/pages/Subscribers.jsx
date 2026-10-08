@@ -111,7 +111,7 @@ const Subscribers = () => {
   if (loading && subscribers.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="size-12 border-4 border-pink-500/30 border-t-pink-500 rounded-full animate-spin"></div>
+        <div className="size-12 border-4 border-[#C5A880]/30 border-t-[#0D0D0D] dark:border-t-[#C5A880] rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -122,7 +122,7 @@ const Subscribers = () => {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-black text-nykaa-text tracking-tight">
-            Newsletter <span className="text-pink-500">Subscribers</span>
+            Newsletter <span className="text-[#C5A880]">Subscribers</span>
           </h1>
           <p className="text-nykaa-text-muted font-medium mt-1">
             Managing {subscribers.length} verified beauty enthusiast emails for drops & campaigns.
@@ -132,7 +132,7 @@ const Subscribers = () => {
         <div className="flex items-center gap-3">
           <button 
             onClick={handleExportCSV}
-            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-pink-600 to-rose-600 text-white font-bold text-xs uppercase tracking-widest shadow-lg shadow-pink-500/20 hover:scale-[1.02] active:scale-95 transition-all"
+            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#0D0D0D] text-[#FAF9F6] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] font-bold text-xs uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
           >
             <Download size={16} /> Export CSV
           </button>
@@ -142,7 +142,7 @@ const Subscribers = () => {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="glass-card p-6 flex items-center gap-5">
-          <div className="size-14 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center">
+          <div className="size-14 rounded-2xl bg-[#0D0D0D] text-[#C5A880] flex items-center justify-center">
             <Mail size={28} />
           </div>
           <div>
@@ -152,7 +152,7 @@ const Subscribers = () => {
         </div>
 
         <div className="glass-card p-6 flex items-center gap-5">
-          <div className="size-14 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center">
+          <div className="size-14 rounded-2xl bg-stone-500/10 text-stone-600 dark:text-stone-300 flex items-center justify-center">
             <Inbox size={28} />
           </div>
           <div>
@@ -162,7 +162,7 @@ const Subscribers = () => {
         </div>
 
         <div className="glass-card p-6 flex items-center gap-5">
-          <div className="size-14 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+          <div className="size-14 rounded-2xl bg-[#C5A880]/15 text-[#C5A880] flex items-center justify-center">
             <Sparkles size={28} />
           </div>
           <div>
@@ -175,11 +175,11 @@ const Subscribers = () => {
       {/* Controls & Search Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="relative group flex-1 min-w-[280px] max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={20} />
           <input 
             type="text" 
             placeholder="Search subscriber by email (e.g. @gmail.com)..."
-            className="input-glass pl-12 text-sm font-medium text-nykaa-text w-full"
+            className="input-glass pl-12 text-sm font-medium text-nykaa-text w-full focus:border-[#C5A880]"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -190,7 +190,7 @@ const Subscribers = () => {
             onClick={() => setFilterType('all')}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               filterType === 'all' 
-                ? 'bg-pink-600 text-white shadow-md shadow-pink-600/20' 
+                ? 'bg-[#0D0D0D] text-[#FAF9F6] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] shadow-md' 
                 : 'glass text-nykaa-text-muted hover:text-nykaa-text'
             }`}
           >
@@ -200,7 +200,7 @@ const Subscribers = () => {
             onClick={() => setFilterType('gmail')}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               filterType === 'gmail' 
-                ? 'bg-pink-600 text-white shadow-md shadow-pink-600/20' 
+                ? 'bg-[#0D0D0D] text-[#FAF9F6] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] shadow-md' 
                 : 'glass text-nykaa-text-muted hover:text-nykaa-text'
             }`}
           >
@@ -210,7 +210,7 @@ const Subscribers = () => {
             onClick={() => setFilterType('other')}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               filterType === 'other' 
-                ? 'bg-pink-600 text-white shadow-md shadow-pink-600/20' 
+                ? 'bg-[#0D0D0D] text-[#FAF9F6] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] shadow-md' 
                 : 'glass text-nykaa-text-muted hover:text-nykaa-text'
             }`}
           >
@@ -238,12 +238,12 @@ const Subscribers = () => {
           <motion.div 
             key={subscriber._id}
             variants={itemVariants}
-            className="glass-card group hover:bg-pink-500/5 transition-all p-4 lg:px-8 lg:py-5"
+            className="glass-card group hover:border-[#C5A880]/30 transition-all p-4 lg:px-8 lg:py-5"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-4">
               {/* Email Address & Avatar */}
               <div className="lg:col-span-5 flex items-center gap-4">
-                <div className="size-11 rounded-2xl bg-gradient-to-br from-pink-500/10 to-purple-600/10 flex items-center justify-center text-pink-500 shadow-inner group-hover:scale-110 transition-transform flex-shrink-0">
+                <div className="size-11 rounded-2xl bg-[#0D0D0D] flex items-center justify-center text-[#C5A880] shadow-inner group-hover:scale-110 transition-transform flex-shrink-0">
                   <Mail size={20} />
                 </div>
                 <div className="min-w-0">
@@ -258,7 +258,7 @@ const Subscribers = () => {
 
               {/* Source */}
               <div className="lg:col-span-2">
-                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20">
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-[#C5A880]/15 text-[#C5A880] border border-[#C5A880]/30">
                   {subscriber.source || 'footer'}
                 </span>
               </div>

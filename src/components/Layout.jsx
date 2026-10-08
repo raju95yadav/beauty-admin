@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const Layout = () => {
   return (
-    <div className="flex min-h-screen bg-nykaa-bg selection:bg-pink-500/30">
+    <div className="flex min-h-screen bg-nykaa-bg selection:bg-[#C5A880]/30 selection:text-[#121214]">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <Navbar />

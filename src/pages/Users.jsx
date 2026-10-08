@@ -79,7 +79,7 @@ const Users = () => {
   if (loading && users.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="size-12 border-4 border-pink-500/30 border-t-pink-500 rounded-full animate-spin"></div>
+        <div className="size-12 border-4 border-[#C5A880]/30 border-t-[#0D0D0D] dark:border-t-[#C5A880] rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -89,17 +89,17 @@ const Users = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black text-nykaa-text tracking-tight">User <span className="text-pink-500">Directory</span></h1>
+          <h1 className="text-4xl font-black text-nykaa-text tracking-tight">User <span className="text-[#C5A880]">Directory</span></h1>
           <p className="text-nykaa-text-muted font-medium mt-1">Managing {users.length} registered beauty enthusiasts.</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-4">
           <div className="relative group flex-1 min-w-[300px]">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={20} />
             <input 
               type="text" 
               placeholder="Search by name, email, phone..."
-              className="input-glass pl-12 text-sm font-medium text-nykaa-text"
+              className="input-glass pl-12 text-sm font-medium text-nykaa-text focus:border-[#C5A880]"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -129,13 +129,13 @@ const Users = () => {
           <motion.div 
             key={user._id}
             variants={itemVariants}
-            className="glass-card group hover:bg-pink-500/5 transition-all p-4 lg:px-8 lg:py-6"
+            className="glass-card group hover:border-[#C5A880]/30 transition-all p-4 lg:px-8 lg:py-6"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-4">
               {/* User Identity */}
               <div className="lg:col-span-4 flex items-center gap-4">
-                <div className="size-12 rounded-2xl bg-gradient-to-br from-pink-500/10 to-purple-600/10 flex items-center justify-center text-pink-500 shadow-inner group-hover:scale-110 transition-transform">
-                  <UserIcon size={24} />
+                <div className="size-12 rounded-2xl bg-[#0D0D0D] flex items-center justify-center text-[#C5A880] shadow-inner group-hover:scale-110 transition-transform">
+                  <UserIcon size={22} />
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-nykaa-text">
@@ -151,7 +151,7 @@ const Users = () => {
               {/* Contact Info */}
               <div className="lg:col-span-3 space-y-1">
                 <div className="flex items-center gap-2 text-sm font-bold text-nykaa-text">
-                  <Mail size={14} className="text-pink-500/70" />
+                  <Mail size={14} className="text-[#C5A880]" />
                   {user.email}
                 </div>
                 {user.phone && (
@@ -165,7 +165,7 @@ const Users = () => {
               {/* Joined Date */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 text-sm font-bold text-nykaa-text">
-                  <Calendar size={14} className="text-blue-500/70" />
+                  <Calendar size={14} className="text-[#6E6D7A]" />
                   {new Date(user.createdAt).toLocaleDateString()}
                 </div>
               </div>
@@ -174,8 +174,8 @@ const Users = () => {
               <div className="lg:col-span-2">
                 <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
                   user.role === 'admin' 
-                    ? 'bg-purple-500/10 text-purple-500 border border-purple-500/20' 
-                    : 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                    ? 'bg-[#C5A880]/15 text-[#C5A880] border border-[#C5A880]/30' 
+                    : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                 }`}>
                   {user.role}
                 </span>

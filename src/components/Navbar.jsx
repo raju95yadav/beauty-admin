@@ -73,7 +73,7 @@ const Navbar = () => {
           href={storeUrl}
           target="_blank"
           rel="noreferrer"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl glass hover:bg-pink-500/10 transition-all text-xs font-bold text-nykaa-text-muted hover:text-pink-500 active:scale-95"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl glass hover:bg-[#C5A880]/10 transition-all text-xs font-bold text-nykaa-text-muted hover:text-[#C5A880] active:scale-95"
           title="Open customer storefront"
         >
           <span>Live Store</span>
@@ -82,20 +82,20 @@ const Navbar = () => {
 
         <button 
           onClick={toggleTheme}
-          className="p-3 rounded-2xl glass hover:bg-pink-500/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"
+          className="p-3 rounded-2xl glass hover:bg-[#C5A880]/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text"
           title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
-          {darkMode ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
+          {darkMode ? <Sun size={20} className="text-[#C5A880]" /> : <Moon size={20} className="text-slate-700" />}
         </button>
 
         <div className="relative">
           <button 
             onClick={() => setIsNotifOpen(!isNotifOpen)}
-            className="p-3 rounded-2xl glass hover:bg-pink-500/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text relative"
+            className="p-3 rounded-2xl glass hover:bg-[#C5A880]/10 transition-colors text-nykaa-text-muted hover:text-nykaa-text relative"
           >
             <Bell size={20} />
             {unreadCount > 0 && (
-              <span className="absolute top-2 right-2 size-4 bg-pink-500 text-white text-[10px] font-black rounded-full flex items-center justify-center animate-pulse border-2 border-nykaa-surface">
+              <span className="absolute top-2 right-2 size-4 bg-[#0D0D0D] text-[#C5A880] border border-[#C5A880] text-[9px] font-black rounded-full flex items-center justify-center animate-pulse">
                 {unreadCount > 9 ? '9+' : unreadCount}
               </span>
             )}
@@ -113,14 +113,14 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-nykaa-text leading-tight">{admin?.name || 'System Admin'}</p>
-            <p className="text-[10px] text-pink-500 uppercase tracking-widest font-black">{admin?.role === 'admin' ? 'Super Admin' : 'Admin'}</p>
+            <p className="text-[10px] text-[#C5A880] uppercase tracking-widest font-black">{admin?.role === 'admin' ? 'Super Admin' : 'Admin'}</p>
           </div>
-          <div className="size-11 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 p-[2px]">
+          <div className="size-11 rounded-2xl bg-[#0D0D0D] p-[2px] border border-[#C5A880]/50 shadow-sm">
             <div className="size-full rounded-[14px] bg-nykaa-surface flex items-center justify-center overflow-hidden">
                {admin?.profilePic ? (
                  <img src={admin.profilePic} alt="Admin" className="size-full object-cover" />
                ) : (
-                 <User className="text-nykaa-text-muted size-6" />
+                 <User className="text-[#C5A880] size-6" />
                )}
             </div>
           </div>

@@ -24,7 +24,7 @@ const AddProduct = () => {
     name: '',
     price: '',
     category: '',
-    brand: 'Nykaa',
+    brand: 'Glam Luxe',
     stock: '',
     image: null,
     imagePreview: '',
@@ -60,7 +60,7 @@ const AddProduct = () => {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       toast.success('Beauty item listed successfully!', { id: loadingToast });
-      setProduct({ name: '', price: '', category: '', brand: 'Nykaa', stock: '', image: null, imagePreview: '', description: '' });
+      setProduct({ name: '', price: '', category: '', brand: 'Glam Luxe', stock: '', image: null, imagePreview: '', description: '' });
       setTimeout(() => navigate('/manage-products'), 1500);
     } catch (error) {
       toast.error(error.message || error.response?.data?.message || 'Failed to list product', { id: loadingToast });
@@ -111,10 +111,10 @@ const AddProduct = () => {
     <div className="max-w-5xl mx-auto pb-20">
       <div className="mb-12">
         <h1 className="text-4xl font-black text-nykaa-text tracking-tight flex items-center gap-4">
-          <div className="size-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-500/20">
-            <PlusCircle className="text-white" size={26} />
+          <div className="size-12 bg-[#0D0D0D] text-[#C5A880] rounded-2xl flex items-center justify-center shadow-lg">
+            <PlusCircle size={26} />
           </div>
-          New <span className="text-pink-500">Beauty</span> Item
+          New <span className="text-[#C5A880]">Beauty</span> Item
         </h1>
         <p className="text-nykaa-text-muted font-medium mt-2 ml-16">Create a premium listing for your latest collection.</p>
       </div>
@@ -129,7 +129,7 @@ const AddProduct = () => {
             className="glass-card p-10 space-y-8"
           >
             <div className="flex items-center gap-3 mb-2">
-              <div className="size-9 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500">
+              <div className="size-9 bg-[#C5A880]/15 rounded-xl flex items-center justify-center text-[#C5A880]">
                 <Info size={18} />
               </div>
               <h3 className="text-lg font-black text-nykaa-text uppercase tracking-wider">Basic Details</h3>
@@ -139,12 +139,12 @@ const AddProduct = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Product Title</label>
                 <div className="relative group">
-                  <Type className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
+                  <Type className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={20} />
                   <input
                     type="text"
                     name="name"
                     required
-                    className="input-glass pl-12 font-medium text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text focus:border-[#C5A880]"
                     placeholder="Ex: Midnight Matte Red Lipstick"
                     value={product.name}
                     onChange={handleChange}
@@ -186,12 +186,12 @@ const AddProduct = () => {
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Price (₹)</label>
                 <div className="relative group">
-                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-pink-500" size={20} />
+                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C5A880]" size={20} />
                   <input
                     type="number"
                     name="price"
                     required
-                    className="input-glass pl-12 font-black text-pink-500"
+                    className="input-glass pl-12 font-black text-[#121214] dark:text-[#FAF9F6] focus:border-[#C5A880]"
                     placeholder="0.00"
                     value={product.price}
                     onChange={handleChange}
@@ -207,7 +207,7 @@ const AddProduct = () => {
                     type="number"
                     name="stock"
                     required
-                    className="input-glass pl-12 font-medium text-nykaa-text"
+                    className="input-glass pl-12 font-medium text-nykaa-text focus:border-[#C5A880]"
                     placeholder="Ex: 50"
                     value={product.stock}
                     onChange={handleChange}
@@ -227,7 +227,7 @@ const AddProduct = () => {
             className="glass-card p-8 flex flex-col items-center"
           >
             <div className="w-full flex items-center gap-3 mb-6">
-              <div className="size-9 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
+              <div className="size-9 bg-[#C5A880]/15 rounded-xl flex items-center justify-center text-[#C5A880]">
                 <ImageIcon size={18} />
               </div>
               <h3 className="text-sm font-black text-nykaa-text uppercase tracking-wider">Main Imagery</h3>
@@ -238,7 +238,7 @@ const AddProduct = () => {
               onDragLeave={onDragLeave}
               onDrop={onDrop}
               className={`relative w-full aspect-[3/4] rounded-3xl border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-hidden cursor-pointer
-                ${isDragging ? 'border-pink-500 bg-pink-500/10' : 'border-nykaa-border bg-nykaa-surface hover:border-pink-500/50 hover:bg-pink-500/5'}`}
+                ${isDragging ? 'border-[#C5A880] bg-[#C5A880]/10' : 'border-nykaa-border bg-nykaa-surface hover:border-[#C5A880]/60 hover:bg-[#C5A880]/5'}`}
               onClick={() => fileInputRef.current.click()}
             >
               <input
@@ -258,7 +258,7 @@ const AddProduct = () => {
                 </div>
               ) : (
                 <div className="flex flex-col items-center text-center p-6">
-                  <div className="size-16 bg-pink-500/10 text-pink-500 rounded-2xl flex items-center justify-center mb-4">
+                  <div className="size-16 bg-[#0D0D0D] text-[#C5A880] rounded-2xl flex items-center justify-center mb-4">
                     <UploadCloud size={32} />
                   </div>
                   <p className="text-nykaa-text font-bold text-sm">Drop your image</p>
@@ -279,11 +279,11 @@ const AddProduct = () => {
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Category</label>
                 <div className="relative group">
-                  <Layers className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={18} />
+                  <Layers className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={18} />
                   <select
                     name="category"
                     required
-                    className="input-glass pl-12 appearance-none font-bold text-nykaa-text"
+                    className="input-glass pl-12 appearance-none font-bold text-nykaa-text focus:border-[#C5A880]"
                     value={product.category}
                     onChange={handleChange}
                   >
@@ -304,12 +304,12 @@ const AddProduct = () => {
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Brand Identity</label>
                 <div className="relative group">
-                  <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={18} />
+                  <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={18} />
                   <input
                     type="text"
                     name="brand"
-                    className="input-glass pl-12 font-medium text-nykaa-text"
-                    placeholder="Ex: Nykaa"
+                    className="input-glass pl-12 font-medium text-nykaa-text focus:border-[#C5A880]"
+                    placeholder="Ex: Chanel, Dior, Glam Luxe"
                     value={product.brand}
                     onChange={handleChange}
                   />

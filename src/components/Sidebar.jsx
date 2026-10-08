@@ -35,8 +35,8 @@ const Sidebar = () => {
     >
       {/* Logo Section */}
       <Link to="/dashboard" className="p-8 flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer">
-        <div className="size-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-pink-500/30">
-          <ShoppingBag className="text-white size-6" />
+        <div className="size-12 rounded-2xl bg-[#0D0D0D] border border-[#C5A880]/40 flex items-center justify-center flex-shrink-0 shadow-lg shadow-black/15">
+          <ShoppingBag className="text-[#C5A880] size-6" />
         </div>
         <AnimatePresence>
           {!isCollapsed && (
@@ -46,7 +46,7 @@ const Sidebar = () => {
               exit={{ opacity: 0, x: -10 }}
               className="font-black text-2xl tracking-tighter text-nykaa-text"
             >
-              GLAM<span className="text-pink-500">Beauty</span>
+              GLAM<span className="text-[#C5A880]">Beauty</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -55,7 +55,7 @@ const Sidebar = () => {
       {/* Toggle Button */}
       <button 
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-4 top-10 size-8 bg-pink-600 rounded-full flex items-center justify-center text-white border-4 border-nykaa-bg hover:scale-110 transition-transform active:scale-95 z-[60]"
+        className="absolute -right-4 top-10 size-8 bg-[#0D0D0D] text-[#C5A880] rounded-full flex items-center justify-center border-4 border-nykaa-bg hover:scale-110 transition-transform active:scale-95 z-[60] shadow-md cursor-pointer"
       >
         {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
       </button>
@@ -68,12 +68,12 @@ const Sidebar = () => {
             to={item.path}
             className={({ isActive }) => `
               relative flex items-center gap-4 px-4 py-4 rounded-2xl transition-all group overflow-hidden
-              ${isActive ? 'bg-pink-500/10 text-pink-500 font-bold shadow-sm' : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-pink-500/5 transition-all'}
+              ${isActive ? 'bg-[#0D0D0D] text-white dark:bg-[#FAF9F6] dark:text-[#0D0D0D] font-bold shadow-md' : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-[#C5A880]/10 transition-all'}
             `}
           >
             {({ isActive }) => (
               <>
-                <item.icon size={22} className={`flex-shrink-0 ${isActive ? 'text-pink-500' : 'group-hover:text-pink-500'}`} />
+                <item.icon size={22} className={`flex-shrink-0 ${isActive ? 'text-[#C5A880]' : 'group-hover:text-[#C5A880]'}`} />
                 <AnimatePresence>
                   {!isCollapsed && (
                     <motion.span
@@ -89,7 +89,7 @@ const Sidebar = () => {
                 {isActive && (
                   <motion.div 
                     layoutId="sidebar-active"
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-pink-500 rounded-r-full"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-[#C5A880] rounded-r-full"
                   />
                 )}
               </>
@@ -105,14 +105,14 @@ const Sidebar = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="p-6 m-4 mt-auto glass rounded-3xl border border-white/5 bg-gradient-to-br from-pink-500/10 to-purple-500/10"
+            className="p-6 m-4 mt-auto glass rounded-3xl border border-[#C5A880]/20 bg-[#C5A880]/10"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Sparkles className="text-pink-500" size={18} />
+              <Sparkles className="text-[#C5A880]" size={18} />
               <p className="text-xs font-black uppercase tracking-widest text-nykaa-text">Admin Insights</p>
             </div>
             <p className="text-[10px] text-nykaa-text-muted font-bold mb-4">View real-time store analytics and metrics.</p>
-            <Link to="/dashboard" className="block text-center w-full py-3 bg-pink-500/10 hover:bg-pink-500/20 text-pink-500 rounded-xl text-xs font-bold transition-all active:scale-95">
+            <Link to="/dashboard" className="block text-center w-full py-3 bg-[#0D0D0D] hover:bg-[#262626] text-white dark:bg-[#FAF9F6] dark:text-[#0D0D0D] rounded-xl text-xs font-bold transition-all active:scale-95 shadow-sm">
               Analytics Overview
             </Link>
           </motion.div>

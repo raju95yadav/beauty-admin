@@ -109,7 +109,7 @@ const Settings = () => {
   if (fetching) {
     return (
       <div className="h-[60vh] flex items-center justify-center">
-        <Loader2 className="size-8 animate-spin text-pink-500" />
+        <Loader2 className="size-8 animate-spin text-[#C5A880]" />
       </div>
     );
   }
@@ -131,8 +131,8 @@ const Settings = () => {
             className={`
               flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm
               ${activeTab === tab.id 
-                ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' 
-                : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-pink-500/5'}
+                ? 'bg-[#0D0D0D] text-[#FAF9F6] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] shadow-md' 
+                : 'text-nykaa-text-muted hover:text-nykaa-text hover:bg-nykaa-border/40'}
             `}
           >
             <tab.icon size={18} />
@@ -154,7 +154,7 @@ const Settings = () => {
             {/* Profile Picture Section */}
             <div className="flex flex-col items-center sm:flex-row gap-8 pb-8 border-b border-nykaa-border">
               <div className="relative group">
-                <div className="size-32 rounded-3xl bg-gradient-to-br from-pink-500/20 to-purple-600/20 p-1">
+                <div className="size-32 rounded-3xl bg-gradient-to-br from-[#0D0D0D]/10 to-[#C5A880]/30 p-1">
                   <div className="size-full rounded-[22px] bg-nykaa-surface flex items-center justify-center overflow-hidden border border-nykaa-border">
                     {previewUrl ? (
                       <img src={previewUrl} alt="Profile" className="size-full object-cover" />
@@ -163,7 +163,7 @@ const Settings = () => {
                     )}
                   </div>
                 </div>
-                <label className="absolute -bottom-2 -right-2 p-2.5 bg-pink-500 text-white rounded-2xl shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
+                <label className="absolute -bottom-2 -right-2 p-2.5 bg-[#0D0D0D] text-[#C5A880] rounded-2xl shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
                   <Camera size={18} />
                   <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                 </label>
@@ -172,7 +172,7 @@ const Settings = () => {
                 <h3 className="text-xl font-bold mb-1 text-nykaa-text">Profile Photo</h3>
                 <p className="text-sm text-nykaa-text-muted mb-4">Update your photo for the admin header.</p>
                 <div className="flex gap-4 justify-center sm:justify-start">
-                  <label className="text-xs font-bold text-pink-500 hover:text-pink-600 cursor-pointer uppercase tracking-widest">
+                  <label className="text-xs font-bold text-[#C5A880] hover:underline cursor-pointer uppercase tracking-widest">
                     Upload New
                     <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                   </label>
@@ -305,7 +305,7 @@ const Settings = () => {
                 onClick={toggleTheme}
                 className={`
                   w-16 h-8 rounded-full p-1 transition-all duration-300 flex items-center
-                  ${darkMode ? 'bg-pink-600 justify-end' : 'bg-gray-300 justify-start'}
+                  ${darkMode ? 'bg-[#C5A880] justify-end' : 'bg-gray-300 justify-start'}
                 `}
               >
                 <motion.div 
@@ -323,7 +323,7 @@ const Settings = () => {
                    className={`
                      cursor-pointer p-6 rounded-3xl border-2 transition-all group
                      ${(i === 0 && !darkMode) || (i === 1 && darkMode) 
-                        ? 'border-pink-500 bg-pink-500/5' 
+                        ? 'border-[#C5A880] bg-[#C5A880]/10' 
                         : 'border-nykaa-border bg-nykaa-surface/5 hover:border-nykaa-text/20'}
                    `}
                  >

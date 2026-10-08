@@ -128,17 +128,17 @@ const ManageProducts = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black text-nykaa-text tracking-tight">Manage <span className="text-pink-500">Inventory</span></h1>
+          <h1 className="text-4xl font-black text-nykaa-text tracking-tight">Manage <span className="text-[#C5A880]">Inventory</span></h1>
           <p className="text-nykaa-text-muted font-medium mt-1">Found {products.length} products in your beauty collection.</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-4">
           <div className="relative group flex-1 min-w-[300px]">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-pink-500 transition-colors" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted group-focus-within:text-[#C5A880] transition-colors" size={20} />
             <input 
               type="text" 
               placeholder="Search by name, category, brand..."
-              className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
+              className="input-glass pl-12 bg-nykaa-surface/5 border-nykaa-border focus:border-[#C5A880] focus:bg-nykaa-surface/10 transition-all text-sm font-bold text-nykaa-text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -171,7 +171,7 @@ const ManageProducts = () => {
                       ? 'bg-red-600 text-white border-red-500 shadow-md'
                       : tab.isWarning
                         ? 'bg-amber-500 text-white border-amber-400 shadow-md'
-                        : 'bg-pink-600 text-white border-pink-500 shadow-md'
+                        : 'bg-[#0D0D0D] text-[#FAF9F6] border-[#0D0D0D] dark:bg-[#FAF9F6] dark:text-[#0D0D0D] dark:border-[#FAF9F6] shadow-md'
                     : 'bg-nykaa-surface/5 border-nykaa-border text-nykaa-text-muted hover:text-nykaa-text'
                 }`}
               >
@@ -188,12 +188,12 @@ const ManageProducts = () => {
          </div>
 
          <button 
-           onClick={fetchProducts}
-           className="btn-glass p-2.5 text-nykaa-text hover:text-pink-500 transition-colors flex items-center gap-2 text-xs font-bold"
-           title="Sync Inventory"
-         >
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
-         </button>
+            onClick={fetchProducts}
+            className="btn-glass p-2.5 text-nykaa-text hover:text-[#C5A880] transition-colors flex items-center gap-2 text-xs font-bold"
+            title="Sync Inventory"
+          >
+             <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+          </button>
       </div>
 
       {loading ? (
@@ -208,14 +208,14 @@ const ManageProducts = () => {
           animate={{ opacity: 1, y: 0 }}
           className="glass-card p-20 flex flex-col items-center justify-center text-center max-w-2xl mx-auto"
         >
-          <div className="size-24 bg-pink-500/10 rounded-full flex items-center justify-center mb-6">
-            <Package className="text-pink-500" size={48} />
+          <div className="size-24 bg-[#0D0D0D] text-[#C5A880] rounded-full flex items-center justify-center mb-6">
+            <Package size={48} />
           </div>
           <h3 className="text-2xl font-black text-nykaa-text">No items match your filter</h3>
           <p className="text-nykaa-text-muted font-medium mt-2 max-w-sm">We couldn't find any products matching your current stock filter or search term.</p>
           <button 
              onClick={() => { setSearchTerm(''); setStockFilter('ALL'); }}
-             className="mt-8 text-pink-500 font-black uppercase tracking-widest text-xs hover:underline"
+             className="mt-8 text-[#C5A880] font-black uppercase tracking-widest text-xs hover:underline"
           >
             Clear Filters
           </button>
@@ -249,7 +249,7 @@ const ManageProducts = () => {
                      <div className="flex gap-2">
                        <button 
                           onClick={() => { setSelectedProduct(p); setIsEditing(true); }}
-                          className="flex-1 bg-white text-black py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-pink-500 hover:text-white transition-all active:scale-95 shadow-lg"
+                          className="flex-1 bg-white text-black py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-[#0D0D0D] hover:text-white dark:hover:bg-[#C5A880] dark:hover:text-[#0D0D0D] transition-all active:scale-95 shadow-lg"
                        >
                          Edit & Restock
                        </button>
@@ -290,7 +290,7 @@ const ManageProducts = () => {
                 <div className="flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-base font-black text-nykaa-text leading-tight flex-1 pr-3 line-clamp-1">{p.name}</h3>
-                    <p className="text-lg font-black text-pink-500">₹{p.price}</p>
+                    <p className="text-lg font-black text-[#121214] dark:text-[#FAF9F6]">₹{p.price}</p>
                   </div>
 
                   <div className="flex items-center justify-between text-xs font-bold text-nykaa-text-muted mt-auto pt-4 border-t border-nykaa-border">
@@ -301,7 +301,7 @@ const ManageProducts = () => {
                         </span>
                      </div>
                      <span className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest bg-nykaa-surface/10 px-2 py-0.5 rounded-lg">
-                        {p.brand || 'Nykaa'}
+                        {p.brand || 'Glam Luxe'}
                      </span>
                   </div>
                 </div>
@@ -374,11 +374,11 @@ const ManageProducts = () => {
             >
               <div className="flex justify-between items-center mb-10">
                 <div className="flex items-center gap-4">
-                   <div className="size-14 bg-pink-500/10 rounded-2xl flex items-center justify-center text-pink-500">
+                   <div className="size-14 bg-[#0D0D0D] rounded-2xl flex items-center justify-center text-[#C5A880]">
                       <Edit2 size={24} />
                    </div>
                    <div>
-                      <h3 className="text-3xl font-black text-nykaa-text tracking-tighter">Edit & <span className="text-pink-500">Restock</span> Product</h3>
+                      <h3 className="text-3xl font-black text-nykaa-text tracking-tighter">Edit & <span className="text-[#C5A880]">Restock</span> Product</h3>
                       <p className="text-nykaa-text-muted text-xs font-bold uppercase tracking-widest mt-1">Update Inventory Stock & Details</p>
                    </div>
                 </div>
@@ -426,7 +426,7 @@ const ManageProducts = () => {
                           <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-nykaa-text-muted" size={18} />
                           <input 
                             type="number"
-                            className="input-glass pl-12 font-bold text-pink-500"
+                            className="input-glass pl-12 font-bold text-[#121214] dark:text-[#FAF9F6]"
                             placeholder="0.00"
                             value={selectedProduct.price}
                             onChange={(e) => setSelectedProduct({...selectedProduct, price: e.target.value})}
@@ -482,7 +482,7 @@ const ManageProducts = () => {
 
                     <div className="space-y-2">
                        <label className="text-[10px] font-black text-nykaa-text-muted uppercase tracking-widest px-1">Main Imagery</label>
-                       <div className="relative group/img overflow-hidden rounded-3xl aspect-video glass flex items-center justify-center cursor-pointer border-dashed border-2 border-nykaa-border hover:border-pink-500/50 transition-all">
+                       <div className="relative group/img overflow-hidden rounded-3xl aspect-video glass flex items-center justify-center cursor-pointer border-dashed border-2 border-nykaa-border hover:border-[#C5A880]/70 transition-all">
                           {selectedProduct.newImage ? (
                              <img src={URL.createObjectURL(selectedProduct.newImage)} className="w-full h-full object-cover" />
                           ) : (
